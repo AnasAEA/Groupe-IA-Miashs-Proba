@@ -3,11 +3,6 @@ import lejos.hardware.port.Port;
 import lejos.hardware.sensor.EV3ColorSensor;
 import lejos.robotics.Color;
 
-public class ColorSensor extends EV3ColorSensor {
-    public ColorSensor(Port port) {
-        super(port);
-    }
-
   
     public String getCurrentColor() {
         int colorId = getColorID();
