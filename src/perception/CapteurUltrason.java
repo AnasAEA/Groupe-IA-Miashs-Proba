@@ -11,8 +11,8 @@ public class CapteurUltrason {
     SampleProvider distanceProvider;
     float[] samples;
 	
-	public CapteurUltrason() {
-		this.ultrasonicSensor = new EV3UltrasonicSensor(SensorPort.S1);
+	public CapteurUltrason(Port sensorPort) {
+		this.ultrasonicSensor = new EV3UltrasonicSensor(sensorPort);
 		this.distanceProvider = ultrasonicSensor.getDistanceMode();
 		this.samples = new float[distanceProvider.sampleSize()]; 		
 	}
