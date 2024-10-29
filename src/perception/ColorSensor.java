@@ -93,4 +93,78 @@ public class CapteurCouleur {
 	
 
 }
+//last version
+package Robot.Sensor;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import lejos.hardware.port.Port;
+import lejos.hardware.sensor.EV3ColorSensor;
+import lejos.robotics.Color;
+import lejos.robotics.SampleProvider;
+
+public class ColorSensor extends EV3ColorSensor {
+    private static final int RGB_TOLERANCE = 20; // Tolérance pour la comparaison des valeurs RGB
+    private static final String COLORS_FILE = "colors.txt"; // Nom du fichier contenant les couleurs calibrées
+    private static final Map<Integer, int[]> COLORS = new HashMap<>(); // Map pour stocker les couleurs calibrées
+    private static final int[] COLOR_NAMES = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.BLACK, Color.GRAY, Color.WHITE}; // Tableau des couleurs de base
+
+    // Chargement des valeurs RGB depuis le fichier de calibration au démarrage du programme
+    static {
+        try (BufferedReader reader = new BufferedReader(new FileReader(COLORS_FILE))) {
+            for (int color : COLOR_NAMES) {
+                String[] rgb = reader.readLine().split(";");
+                COLORS.put(color, new int[] {
+                    Integer.parseInt(rgb[0]), // Valeur rouge calibrée
+                    Integer.parseInt(rgb[1]), // Valeur verte calibrée
+                    Integer.parseInt(rgb[2])  // Valeur bleue calibrée
+                });
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Erreur lors du chargement des couleurs : " + COLORS_FILE, e); // Exception si le fichier est introuvable
+        }
+    }
+
+    // Constructeur : initialise le capteur de couleur avec le port spécifié
+    public ColorSensor(Port port) {
+        super(port);
+    }
+
+    // Méthode pour obtenir les valeurs RGB actuelles
+    private int[] getRGB() {
+        SampleProvider rgbMode = getRGBMode(); // Mode RGB du capteur
+        float[] sample = new float[rgbMode.sampleSize()];
+        rgbMode.fetchSample(sample, 0); // Lit les valeurs RGB
+        return new int[] {(int)(sample[0] * 255), (int)(sample[1] * 255), (int)(sample[2] * 255)}; // Convertit les valeurs en entiers de 0 à 255
+    }
+
+    // Méthode pour détecter la couleur en fonction des valeurs RGB
+    public int getDetectedColor() {
+        int[] currentRGB = getRGB(); // Récupère les valeurs RGB actuelles
+
+        // Parcours de chaque couleur calibrée pour voir si elle correspond aux valeurs détectées
+        for (Map.Entry<Integer, int[]> entry : COLORS.entrySet()) {
+            int[] colorRGB = entry.getValue();
+            if (Math.abs(currentRGB[0] - colorRGB[0]) <= RGB_TOLERANCE && // Vérifie la tolérance pour le rouge
+                Math.abs(currentRGB[1] - colorRGB[1]) <= RGB_TOLERANCE && // Vérifie la tolérance pour le vert
+                Math.abs(currentRGB[2] - colorRGB[2]) <= RGB_TOLERANCE) { // Vérifie la tolérance pour le bleu
+                return entry.getKey(); // Retourne la couleur détectée si elle correspond
+            }
+        }
+        return -1; // Retourne -1 si aucune couleur ne correspond
+    }
+
+    // Méthode pour vérifier si une couleur spécifique est détectée
+    public boolean isColorDetected(int color) {
+        return getDetectedColor() == color; // Compare la couleur détectée avec la couleur passée en paramètre
+    }
+
+    // Affiche les valeurs RGB actuelles pour la couleur détectée
+    public void printCurrentColor() {
+        int[] rgb = getRGB(); // Obtient les valeurs RGB actuelles
+        System.out.printf("Current RGB - R: %d G: %d B: %d%n", rgb[0], rgb[1], rgb[2]); // Affiche les valeurs RGB
+    }
+}
 
