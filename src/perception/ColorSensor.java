@@ -209,12 +209,12 @@ public class ColorSensor extends EV3ColorSensor {
         SampleProvider rgbMode = getRGBMode(); // Mode RGB du capteur
         float[] sample = new float[rgbMode.sampleSize()];
         rgbMode.fetchSample(sample, 0); // Lit les valeurs RGB
-        return new int[] {(int)(sample[0] * 255), (int)(sample[1] * 255), (int)(sample[2] * 255)}; // Convertit les valeurs en entiers de 0 à 255
+        return new int[] {(int)(sample[0] * 255), (int)(sample[1] * 255), (int)(sample[2] * 255)}; 
     }
 
     // Méthode pour détecter la couleur en fonction des valeurs RGB
     public int getDetectedColor() {
-        int[] currentRGB = getRGB(); // Récupère les valeurs RGB actuelles
+        int[] currentRGB = getRGB(); 
 
         // Parcours de chaque couleur calibrée pour voir si elle correspond aux valeurs détectées
         for (int i = 0; i < COLORS.length; i++) {
