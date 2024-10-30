@@ -176,17 +176,17 @@ import lejos.robotics.Color;
 import lejos.robotics.SampleProvider;
 
 public class ColorSensor extends EV3ColorSensor {
-    private static final int RGB_TOLERANCE = 20; // Tolérance pour la comparaison des valeurs RGB
+    private static final int RGB_TOLERANCE = 20; 
 
     // Tableau des couleurs de base avec leurs valeurs RGB calibrées
     private static final int[][] COLORS = {
-        {255, 0, 0},   // RED
-        {0, 255, 0},   // GREEN
-        {0, 0, 255},   // BLUE
-        {255, 255, 0}, // YELLOW
-        {0, 0, 0},     // BLACK
-        {128, 128, 128}, // GRAY
-        {255, 255, 255}  // WHITE
+        {255, 0, 0},   
+        {0, 255, 0},   
+        {0, 0, 255},   
+        {255, 255, 0}, 
+        {0, 0, 0},    
+        {128, 128, 128}, 
+        {255, 255, 255}  
     };
 
     private static final int[] COLOR_NAMES = {
@@ -199,7 +199,7 @@ public class ColorSensor extends EV3ColorSensor {
         Color.WHITE
     };
 
-    // Constructeur : initialise le capteur de couleur avec le port spécifié
+   
     public ColorSensor(Port port) {
         super(port);
     }
@@ -225,18 +225,18 @@ public class ColorSensor extends EV3ColorSensor {
                 return COLOR_NAMES[i]; // Retourne la couleur détectée si elle correspond
             }
         }
-        return -1; // Retourne -1 si aucune couleur ne correspond
+        return -1; 
     }
 
     // Méthode pour vérifier si une couleur spécifique est détectée
     public boolean isColorDetected(int color) {
-        return getDetectedColor() == color; // Compare la couleur détectée avec la couleur passée en paramètre
+        return getDetectedColor() == color; 
     }
 
     // Affiche les valeurs RGB actuelles pour la couleur détectée
     public void printCurrentColor() {
-        int[] rgb = getRGB(); // Obtient les valeurs RGB actuelles
-        System.out.printf("Current RGB - R: %d G: %d B: %d%n", rgb[0], rgb[1], rgb[2]); // Affiche les valeurs RGB
+        int[] rgb = getRGB(); 
+        System.out.printf("Current RGB - R: %d G: %d B: %d%n", rgb[0], rgb[1], rgb[2]); 
     }
 }
 
