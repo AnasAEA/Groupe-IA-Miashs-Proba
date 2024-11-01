@@ -26,8 +26,22 @@ public class Deplacement {
 		return direction;
 	}
 	
-	public MovePilot getPilot() {
+	public MovePilot getPilot() { 
 		return pilot;
+	}
+
+	public void tournerAsync(double angle) { //Rotation asynchrone de l’angle en paramètre
+	        pilot.rotate(angle, true);
+	        direction += angle;
+	        direction = direction % 360;
+	        
+	        if (direction < 0) {
+	            direction += 360;
+	        }
+    	}
+
+	public void modifVitRot(double s){ //Définit la vitesse de rotation
+		pilot.setAngularSpeed(s);
 	}
 	
 	public void stop() {
