@@ -22,7 +22,6 @@ public class Deplacement {
 	}
 	
 	public float getDirection() { //renvoie la direction en degres
-
 		return direction;
 	}
 	
