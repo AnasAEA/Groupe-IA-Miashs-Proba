@@ -37,10 +37,6 @@ public class Deplacement {
 	        pilot.rotate(angle, true);
 	        direction += angle;
 	        direction = direction % 360;
-	        
-	        if (direction < 0) {
-	            direction += 360;
-	        }
     	}
 
 	public void modifVitRot(double s){ //modifie la vitesse de rotation en degrés par seconde
