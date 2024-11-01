@@ -30,6 +30,10 @@ public class Deplacement {
 		return pilot;
 	}
 
+	public void avancerSync(double distance) { //Avancement asynchrone de la distance en paramètres
+   		 pilot.travel(distance, true); 
+	}
+
 	public void tournerAsync(double angle) { //Rotation asynchrone de l’angle en paramètre
 	        pilot.rotate(angle, true);
 	        direction += angle;
