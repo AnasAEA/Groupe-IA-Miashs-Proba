@@ -44,7 +44,7 @@ public class Deplacement {
 	        }
     	}
 
-	public void modifVitRot(double s){ //Définit la vitesse de rotation
+	public void modifVitRot(double s){ //modifie la vitesse de rotation en degrés par seconde
 		pilot.setAngularSpeed(s);
 	}
 	
