@@ -29,7 +29,7 @@ public class Deplacement {
 		return pilot;
 	}
 
-	public void avancerSync(double distance) { //Avancement asynchrone de la distance en paramètres
+	public void avancerAsync(double distance) { //Avancement asynchrone de la distance en paramètres
    		 pilot.travel(distance, true); 
 	}
 
@@ -42,6 +42,11 @@ public class Deplacement {
 	public void modifVitRot(double s){ //modifie la vitesse de rotation en degrés par seconde
 		pilot.setAngularSpeed(s);
 	}
+
+	 public void modifVitLin(double s){ //modifie la vitesse de déplacement linéaire en cm par seconde.
+                 pilot.setLinearSpeed(s);    
+	
+	 }
 	
 	public void stop() {
 		pilot.stop();
