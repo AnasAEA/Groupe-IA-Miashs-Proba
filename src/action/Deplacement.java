@@ -10,6 +10,7 @@ import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.chassis.*;
 
 public class Deplacement {
+	private static final double DIAMETRE = 5.6;
   	private MovePilot pilot;
 	private float direction =0;
 	
