@@ -92,3 +92,18 @@ public class CapteurCouleur {
         }
     }
 }
+public static void main(String[] args) {
+            // Initialisation du capteur de couleur sur le port 1
+            CapteurCouleur capteur = new CapteurCouleur(SensorPort.S1);
+
+            System.out.println("Appuyez sur un bouton pour commencer le test...");
+            Button.waitForAnyPress();
+
+            // Boucle pour tester la détection de couleur
+            while (!Button.ESCAPE.isDown()) {
+                capteur.updateColorIfChanged(); // Vérifie si la couleur a changé et affiche si c'est le cas
+                Delay.msDelay(500); // Délai pour éviter de trop solliciter le capteur
+            }
+
+            System.out.println("Test terminé.");
+        }
