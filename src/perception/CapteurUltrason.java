@@ -259,3 +259,52 @@ public class CapteurUltrason {
 	}
 
 }
+
+ //Detect Palet by Marieme
+	public CapteurUltrason() {   //initialisation de l'attribut sensor port qui permet l'accÃ©s au moteur
+		this.ultrasonicSensor = new EV3UltrasonicSensor(SensorPort.S1);
+		this.distanceProvider = ultrasonicSensor.getDistanceMode();
+		this.samples = new float[distanceProvider.sampleSize()]; 		
+	    this.distances = new float [MAX]; //  MAX longueur du tableau
+	   this.d = new Deplacement(); //instance de la classe déplacement
+	}
+	
+	
+	public void  enregistrerDistances(long duree) { // enregistre les distances  captées dans un tableau au fur et  mesure qu'on avance
+		d.avancerAsync(200);  // on avance de manière asynchroniue
+		MovePilot pilot = d.getPilot();
+		while (pilot.isMoving()) {
+		int i = 0; 
+		long startTime = System.currentTimeMillis(); // on definit la duree
+		while ((System.currentTimeMillis()- startTime) < duree && i < distances.length) { tant que la duree n'est pas atteinte
+			distanceProvider.fetchSample(samples,  0); //on capte les distances
+			distances[i] = samples [0]*100; // conversion en cm
+			i++;
+		}
+		d.stop(); // on s'arrete une foit que la duree est finie
+		try { // on fait une exception
+			Thread.sleep(100);
+		}
+	catch (InterruptedException e) {
+		e.printStackTrace();
+	}
+	}
+
+	}
+	public boolean detectPalet( long duree){  // on detecte pendant une certaine duree
+		enregistrerDistances(duree); // on genere le tableau des distances tout en avancant
+		int j = 0;
+			while ( j <= distances.length) { // on parcoure le tableau des distances 
+				if (distances[j] > 32.6 ) { //tant qu'on  une distance superieur  32.6 , on continue  parcourir
+					j++;
+			}
+				}
+				if (j < distances.length) { // si on s'est arrete avant la fin du tableau on a eu une distance inferieur a 32.6 donc ce n'est pas un palet
+					return false;
+				}
+				else { //si on finit le tableau on a pas un palet
+					return true;
+				}
+	}
+
+		
