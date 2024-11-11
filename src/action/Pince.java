@@ -12,7 +12,12 @@ public class Pince {
         this.pinceMotor.setSpeed(motor.getSpeed() * 2); // Ajustement de la vitesse
         this.etat = true; // Initialisé comme fermé
     }
-
+//   public void saisirPalet() {
+        if (!etat) { // Si les pinces ne sont pas déjà fermées
+            pinceMotor.rotate(-360 * 3); // Ferme les pinces
+            while (pinceMotor.isMoving()) {}
+            etat = true;
+            System.out.println("Palet saisi."); //
     // Active les pinces pour saisir un palet
     public void saisirPalet() {
         if (!etat) { // Si les pinces ne sont pas déjà fermées
