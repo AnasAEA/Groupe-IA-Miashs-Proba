@@ -14,7 +14,7 @@ public class Pince {
     }
 
     // Active les pinces pour saisir un palet
-    public void saisirPalet() {
+    public void fermerPince() {
         if (!etat) { // Si les pinces ne sont pas déjà fermées
             pinceMotor.rotate(-360 * 3); // Ferme les pinces (ajustez la rotation si nécessaire)
             while (pinceMotor.isMoving()) {}
@@ -24,7 +24,7 @@ public class Pince {
     }
 
     // Relâche le palet
-    public void lacherPalet() {
+    public void ouvrirPince() {
         if (etat) { // Si les pinces ne sont pas déjà ouvertes
             pinceMotor.rotate(360 * 3); // Ouvre les pinces
             while (pinceMotor.isMoving()) {}
@@ -36,9 +36,9 @@ public class Pince {
     // Modifie l'état des pinces
     public void setEtat(boolean etat) {
         if (etat) {
-            saisirPalet();
+           fermerPince();
         } else {
-            lacherPalet();
+            ouvrirPince();
         }
     }
 
