@@ -74,7 +74,7 @@ public class CapteurUltrason {
 	    // Valeur de retour par défaut si aucun palet n'est détecté
 	    deplacement.stop();
 	    return false;
-	}
+    }
 
     public void close() {
         this.close();
