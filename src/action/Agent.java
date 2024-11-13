@@ -18,6 +18,7 @@ public class Agent {
         capteurUltrason = new CapteurUltrason(SensorPort.S1);
         capteurTouche = new CapteurTouche(SensorPort.S2);
         deplacement = new Deplacement();
+      pince = new Pince();
     }
 
     public void setaPalet(boolean aPalet) {
