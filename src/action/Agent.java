@@ -19,7 +19,15 @@ public class Agent {
         capteurTouche = new CapteurTouche(SensorPort.S2);
         deplacement = new Deplacement();
     }
-    
+
+    public void setaPalet(boolean aPalet) {
+        this.aPalet = aPalet;
+    }
+
+  
+    public boolean isaPalet() {
+        return this.aPalet;
+    }
     
     public boolean detectObjet() {
         float distanceDobjet = capteurUltrason.getDistance();
@@ -31,8 +39,8 @@ public class Agent {
     
     // Method to detect objects by rotating 360 degrees
     public ArrayList<float[]> detecterLesObjets() {
-        deplacement.getPilot().setAngularSpeed(30); // Régler la vitesse de rotation
-        deplacement.tournerAsync(360); // Démarrer une rotation de 360 degrés
+        deplacement.getPilot().setAngularSpeed(30); // RÃ©gler la vitesse de rotation
+        deplacement.tournerAsync(360); // DÃ©marrer une rotation de 360 degrÃ©s
         MovePilot pilot = deplacement.getPilot();
         this.liste.clear();
 
@@ -40,14 +48,14 @@ public class Agent {
             float distance = capteurUltrason.getDistance();
             float directionActuelle = deplacement.getDirection(); // Obtenir l'orientation actuelle
 
-            // Collecter les données si la distance est inférieure à un certain seuil
+            // Collecter les donnÃ©es si la distance est infÃ©rieure Ã  un certain seuil
             if (distance < 60.0f) {
                 float[] objet = { distance, directionActuelle };
                 this.liste.add(objet);
-                System.out.println("Objet détecté à une distance de : " + distance + " cm, direction : " + directionActuelle + " degrés.");
+                System.out.println("Objet dÃ©tectÃ© Ã  une distance de : " + distance + " cm, direction : " + directionActuelle + " degrÃ©s.");
             }
 
-            // Pause pour éviter de surcharger le processeur
+            // Pause pour Ã©viter de surcharger le processeur
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -55,7 +63,7 @@ public class Agent {
             }
         }
 
-        pilot.stop(); // S'assurer que le robot arrête de tourner
+        pilot.stop(); // S'assurer que le robot arrÃªte de tourner
         return this.liste;
     }
 
@@ -90,7 +98,7 @@ public class Agent {
             float directionToObject = bestObj[1];
 
             System.out.println("Best object found at distance: " + distanceToObject + " cm, direction: " + directionToObject + " degrees.");
-            deplacement.getPilot().setAngularSpeed(30); // Régler la vitesse de rotation
+            deplacement.getPilot().setAngularSpeed(30); // RÃ©gler la vitesse de rotation
          // Calculate angle to turn
             float currentDirection = deplacement.getDirection();
             float angleToTurn = directionToObject - currentDirection;
