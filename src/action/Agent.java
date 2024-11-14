@@ -7,6 +7,7 @@ import lejos.hardware.port.SensorPort;
 import lejos.robotics.navigation.MovePilot;
 import perception.CapteurTouche;
 import perception.CapteurUltrason;
+import perception.ColorSensor;
 
 public class Agent {
     // Existing class attributes
@@ -14,7 +15,7 @@ public class Agent {
     private CapteurTouche capteurTouche;
     private Deplacement deplacement;
     private ArrayList<float[]> liste = new ArrayList<>();
-    private float directionCampAdverse; // D�claration en tant qu'attribut de classe
+    private float directionCampAdverse; // Déclaration en tant qu'attribut de classe
 
     // Constructor
     public Agent() {
@@ -24,9 +25,9 @@ public class Agent {
     }
 
     /**
-     * D�tecte tout objet � une distance inf�rieure � 50 cm.
+     * Détecte tout objet a une distance inférieure é 50 cm.
      * 
-     * @return true si un objet est d�tect�, false sinon.
+     * @return true si un objet est détecté, false sinon.
      */
     public boolean detectObjet() {
         float distanceDobjet = capteurUltrason.getDistance();
@@ -35,8 +36,8 @@ public class Agent {
 
     // Method to detect objects by rotating 360 degrees
     public ArrayList<float[]> detecterLesObjets() {
-        deplacement.getPilot().setAngularSpeed(30); // R�gler la vitesse de rotation
-        deplacement.tournerAsync(360); // D�marrer une rotation de 360 degr�s
+        deplacement.getPilot().setAngularSpeed(30); // Régler la vitesse de rotation
+        deplacement.tournerAsync(360); // Démarrer une rotation de 360 degrés
         MovePilot pilot = deplacement.getPilot();
         this.liste.clear();
 
@@ -44,15 +45,15 @@ public class Agent {
             float distance = capteurUltrason.getDistance();
             float directionActuelle = deplacement.getDirection(); // Obtenir l'orientation actuelle
 
-            // Collecter les donn�es si la distance est inf�rieure � un certain seuil
+            // Collecter les données si la distance est inférieure à un certain seuil
             if (distance < 60.0f) {
                 float[] objet = { distance, directionActuelle };
                 this.liste.add(objet);
-                System.out.println("Objet d�tect� � une distance de : " + distance + " cm, direction : "
-                        + directionActuelle + " degr�s.");
+                System.out.println("Objet détecté é une distance de : " + distance + " cm, direction : "
+                        + directionActuelle + " degrés.");
             }
 
-            // Pause pour �viter de surcharger le processeur
+            // Pause pour éviter de surcharger le processeur
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -60,7 +61,7 @@ public class Agent {
             }
         }
 
-        pilot.stop(); // S'assurer que le robot arr�te de tourner
+        pilot.stop(); // S'assurer que le robot arréte de tourner
         return this.liste;
     }
 
@@ -79,6 +80,21 @@ public class Agent {
             }
         }
         return bestObjet;
+    }
+
+    /**
+     * Surveille la présence d'obstacles et effectue une esquive si un obstacle est
+     * détecté.
+     *
+     * @return true si un obstacle était détecté et esquivé, false sinon.
+     */
+    public boolean Surveiller() {
+        if (detectObjet()) {
+            System.out.println("Obstacle détecté lors de la surveillance. Initiation de l'évitement...");
+            esquive();
+            return true;
+        }
+        return false;
     }
 
     private void marquerPalet() {
@@ -116,7 +132,7 @@ public class Agent {
 
             System.out.println("Best object found at distance: " + distanceToObject + " cm, direction: "
                     + directionToObject + " degrees.");
-            deplacement.getPilot().setAngularSpeed(30); // R�gler la vitesse de rotation
+            deplacement.getPilot().setAngularSpeed(30); // Régler la vitesse de rotation
             // Calculate angle to turn
             float currentDirection = deplacement.getDirection();
             float angleToTurn = directionToObject - currentDirection;
