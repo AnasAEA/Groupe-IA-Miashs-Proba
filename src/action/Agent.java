@@ -1,6 +1,8 @@
-package action;
+package agent;
+
 import java.util.ArrayList;
 
+import action.Deplacement;
 import lejos.hardware.port.SensorPort;
 import lejos.robotics.navigation.MovePilot;
 import perception.CapteurTouche;
@@ -12,36 +14,29 @@ public class Agent {
     private CapteurTouche capteurTouche;
     private Deplacement deplacement;
     private ArrayList<float[]> liste = new ArrayList<>();
+    private float directionCampAdverse; // D�claration en tant qu'attribut de classe
 
     // Constructor
     public Agent() {
         capteurUltrason = new CapteurUltrason(SensorPort.S1);
         capteurTouche = new CapteurTouche(SensorPort.S2);
         deplacement = new Deplacement();
-      pince = new Pince();
     }
 
-    public void setaPalet(boolean aPalet) {
-        this.aPalet = aPalet;
-    }
-
-  
-    public boolean isaPalet() {
-        return this.aPalet;
-    }
-    
+    /**
+     * D�tecte tout objet � une distance inf�rieure � 50 cm.
+     * 
+     * @return true si un objet est d�tect�, false sinon.
+     */
     public boolean detectObjet() {
         float distanceDobjet = capteurUltrason.getDistance();
-        if (distanceDobjet < 60) {
-            return capteurUltrason.detecterPalet();
-        }
-        return false;
+        return distanceDobjet < 50;
     }
-    
+
     // Method to detect objects by rotating 360 degrees
     public ArrayList<float[]> detecterLesObjets() {
-        deplacement.getPilot().setAngularSpeed(30); // Régler la vitesse de rotation
-        deplacement.tournerAsync(360); // Démarrer une rotation de 360 degrés
+        deplacement.getPilot().setAngularSpeed(30); // R�gler la vitesse de rotation
+        deplacement.tournerAsync(360); // D�marrer une rotation de 360 degr�s
         MovePilot pilot = deplacement.getPilot();
         this.liste.clear();
 
@@ -49,14 +44,15 @@ public class Agent {
             float distance = capteurUltrason.getDistance();
             float directionActuelle = deplacement.getDirection(); // Obtenir l'orientation actuelle
 
-            // Collecter les données si la distance est inférieure à un certain seuil
+            // Collecter les donn�es si la distance est inf�rieure � un certain seuil
             if (distance < 60.0f) {
                 float[] objet = { distance, directionActuelle };
                 this.liste.add(objet);
-                System.out.println("Objet détecté à une distance de : " + distance + " cm, direction : " + directionActuelle + " degrés.");
+                System.out.println("Objet d�tect� � une distance de : " + distance + " cm, direction : "
+                        + directionActuelle + " degr�s.");
             }
 
-            // Pause pour éviter de surcharger le processeur
+            // Pause pour �viter de surcharger le processeur
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -64,12 +60,11 @@ public class Agent {
             }
         }
 
-        pilot.stop(); // S'assurer que le robot arrête de tourner
+        pilot.stop(); // S'assurer que le robot arr�te de tourner
         return this.liste;
     }
 
-    
- // Method to find the closest object
+    // Method to find the closest object
     public float[] bestObjet(ArrayList<float[]> objets) {
         if (objets.isEmpty()) {
             return null;
@@ -85,10 +80,31 @@ public class Agent {
         }
         return bestObjet;
     }
-    
-    
-    public void run() {
-        // Detect all objects
+
+    private void marquerPalet() {
+        // Ajuster l'orientation du robot vers le camp adverse
+        float currentDirection = deplacement.getDirection();
+        float angleToTurn = directionCampAdverse - currentDirection;
+
+        // Ajuster l'angle pour qu'il se situe entre -180 et 180 degrés
+        if (angleToTurn > 180) {
+            angleToTurn -= 360;
+        } else if (angleToTurn < -180) {
+            angleToTurn += 360;
+        }
+
+        // Déplacer le robot vers la ligne blanche (camp adverse)
+        versCouleur(White);
+
+        // Avancer d'environ 5 cm pour s'assurer que le palet se trouve bien dans le
+        // camp adverse
+        deplacement.avancer(5);
+        // Lâcher le palet
+        lacherPalet();
+        deplacement.avancer(-10);
+    }
+
+    public boolean ChercherPalet() {
         ArrayList<float[]> objets = detecterLesObjets();
 
         // Find the best object (closest)
@@ -98,9 +114,10 @@ public class Agent {
             float distanceToObject = bestObj[0];
             float directionToObject = bestObj[1];
 
-            System.out.println("Best object found at distance: " + distanceToObject + " cm, direction: " + directionToObject + " degrees.");
-            deplacement.getPilot().setAngularSpeed(30); // Régler la vitesse de rotation
-         // Calculate angle to turn
+            System.out.println("Best object found at distance: " + distanceToObject + " cm, direction: "
+                    + directionToObject + " degrees.");
+            deplacement.getPilot().setAngularSpeed(30); // R�gler la vitesse de rotation
+            // Calculate angle to turn
             float currentDirection = deplacement.getDirection();
             float angleToTurn = directionToObject - currentDirection;
 
@@ -120,30 +137,19 @@ public class Agent {
 
             // Rotate to face the object
             deplacement.getPilot().rotate(angleToTurn);
-            // Advance towards the object
-        /*    deplacement.avancerSync(distanceToObject);
-
-            while (deplacement.getPilot().isMoving()) {
-                // Wait for movement to complete
-                try {
-                    Thread.sleep(50);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }*/
 
             // Check if it's a palet
             boolean isPalet = capteurUltrason.detecterPalet();
-            if (isPalet) {
-                System.out.println("Palet detected!");
-                // Proceed to collect the palet
-            } else {
-                System.out.println("Not a palet.");
-                // Handle accordingly
-            }
-        } else {
-            System.out.println("No objects detected.");
+            return isPalet;
         }
+        return false;
+    }
+
+    public void run() {
+        // Initialiser la direction du camp adverse
+        directionCampAdverse = deplacement.getDirection();
+        System.out
+                .println("Direction du camp adverse initialement réglée à : " + directionCampAdverse + " degrés.");
 
         // Cleanup resources
         capteurUltrason.close();
@@ -151,11 +157,10 @@ public class Agent {
         deplacement.stop();
         System.out.println("Program terminated.");
     }
-    
+
     public static void main(String[] args) {
         Agent agent = new Agent();
         agent.run();
     }
 
-    
 }
