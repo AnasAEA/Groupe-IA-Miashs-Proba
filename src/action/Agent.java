@@ -160,6 +160,13 @@ public class Agent {
         }
         return false;
     }
+    
+    public void ligneCentrale() {
+	   //apres avoir deposer le palet on tourne 180 deg
+	   deplacement.tournerAsync(180); 
+	   //on avance jusqu'à que la couleur detectée est Black (ligne centrale)
+	   versCouleur("Black");
+    }
 
     public void run() {
         // Initialiser la direction du camp adverse
