@@ -249,7 +249,57 @@ public class Agent {
         deplacement.stop();
         System.out.println("Program terminated.");
     }
+public void verscouleurs() {
+    String couleurCourante = couleur.getColorName(); // Obtenir la couleur initiale
+    System.out.println("Couleur initiale détectée : " + couleurCourante);
 
+    while (!Button.ESCAPE.isDown()) { // La boucle se poursuit tant que l'utilisateur ne quitte pas
+        deplacement.avancerAsync(10); // Avancer sur une petite distance en continu
+        Delay.msDelay(100); // Pause pour éviter de lire trop rapidement les données du capteur
+
+        String nouvelleCouleur = couleur.getColorName(); // Lire la nouvelle couleur
+        if (!nouvelleCouleur.equals(couleurCourante)) { // Comparer avec la dernière couleur détectée
+            deplacement.stop(); // Arrêter le mouvement
+            System.out.println("Nouvelle couleur détectée : " + nouvelleCouleur);
+            couleurCourante = nouvelleCouleur; // Mettre à jour la couleur courante
+
+            // Pause pour permettre une observation ou une action avant de continuer
+            Delay.msDelay(1000);
+        }
+    }
+    System.out.println("Fin de la détection des couleurs.");
+}
+public void esquive() {
+    System.out.println("Détection d'obstacle. Initiation de l'esquive...");
+
+   
+    float directionInitiale = deplacement.getDirection();
+
+   
+    while (capteurUltrason.getDistance() < 50) { 
+        deplacement.tournerAsync(20); 
+        Delay.msDelay(100); 
+    }
+
+    System.out.println("Chemin dégagé détecté. Avancement...");
+    deplacement.stop();
+    deplacement.avancer(30); 
+
+    // Revenir à la trajectoire initiale
+    float directionActuelle = deplacement.getDirection();
+    float angleRetour = directionInitiale - directionActuelle;
+
+  
+    if (angleRetour > 180) {
+        angleRetour -= 360;
+    } else if (angleRetour < -180) {
+        angleRetour += 360;
+    }
+
+    System.out.println("Retour à la trajectoire initiale.");
+    deplacement.tournerAsync(angleRetour); 
+    Delay.msDelay(500); 
+}
     public static void main(String[] args) {
         Agent agent = new Agent();
         agent.run();
