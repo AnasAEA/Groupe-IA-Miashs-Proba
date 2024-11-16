@@ -168,7 +168,7 @@ public class Agent {
     }
 	public void versCouleur(String couleurCible) {
 	    System.out.println("Recherche de la couleur : " + couleurCible);
-	    deplacement.forward();
+	    deplacement.getPilot().forward();
 	    
 	    while (deplacement.getPilot().isMoving()) { 
 	        // Vérifier s'il y a un obstacle
