@@ -33,14 +33,6 @@ public class Pince {
         }
     }
 
-    // Modifie l'état des pinces
-    public void setEtat(boolean etat) {
-        if (etat) {
-           fermerPince();
-        } else {
-            ouvrirPince();
-        }
-    }
 
     // Vérifie si les pinces sont fermées
     public boolean isClose() {
