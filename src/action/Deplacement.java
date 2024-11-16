@@ -47,6 +47,7 @@ public class Deplacement {
 	}
 
 	public void tournerAsync(double angle) { //Rotation asynchrone de l’angle en paramètre
+		this.getPilot().setAngularSpeed(30);
 	        pilot.rotate(angle, true);
 	        // Pas besoin de mettre à jour 'direction' ici ; le PoseProvider s'en charge
     	}
