@@ -255,36 +255,40 @@ public void verscouleurs() {
     System.out.println("Fin de la détection des couleurs.");
 }
 public void esquive() {
-    System.out.println("Détection d'obstacle. Initiation de l'esquive...");
+	   
+		 float distance = getDistance();
+	    // Étape 1 : Tourner de 90 degrés
+	    deplacement.tournerAsync(90); // Rotation horaire de 90 degrés
+	    Delay.msDelay(500); // Pause pour stabiliser après la rotation
 
-   
-    float directionInitiale = deplacement.getDirection();
+	    // Étape 2 : Avancer de 10 cm
+	    deplacement.avancer(10);
+	  
+	    Delay.msDelay(500);
 
-   
-    while (capteurUltrason.getDistance() < 50) { 
-        deplacement.tournerAsync(20); 
-        Delay.msDelay(100); 
-    }
+	    // Étape 3 : Tourner de -90 degrés
+	    deplacement.tournerAsync(-90); // Rotation antihoraire de 90 degrés
+	   
 
-    System.out.println("Chemin dégagé détecté. Avancement...");
-    deplacement.stop();
-    deplacement.avancer(30); 
+	    // Étape 4 : Avancer d'une distance calculée
+	    float distance = getDistance(); // Appel de la méthode pour obtenir la distance
+	    deplacement.avancer(distance + 10); // Avancer de (distance détectée + 10 cm)
+	    
+	    Delay.msDelay(500);
 
-    // Revenir à la trajectoire initiale
-    float directionActuelle = deplacement.getDirection();
-    float angleRetour = directionInitiale - directionActuelle;
+	    // Étape 5 : Tourner de -90 degrés
+	    deplacement.tournerAsync(-90); // Rotation antihoraire de 90 degrés
+	    Delay.msDelay(500);
 
-  
-    if (angleRetour > 180) {
-        angleRetour -= 360;
-    } else if (angleRetour < -180) {
-        angleRetour += 360;
-    }
-
-    System.out.println("Retour à la trajectoire initiale.");
-    deplacement.tournerAsync(angleRetour); 
-    Delay.msDelay(500); 
-}
+	    // Étape 6 : Avancer de 10 cm
+	    deplacement.avancer(10);
+	    System.out.println("Avancement final de 10 cm pour compléter l'esquive.");
+	    Delay.msDelay(500);
+	deplacement.tournerAsync(90);
+	
+	    System.out.println("Esquive terminée.");
+	    
+	}
     public static void main(String[] args) {
         Agent agent = new Agent();
         agent.run();
