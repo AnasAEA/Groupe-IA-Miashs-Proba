@@ -203,14 +203,12 @@ public void lacherPalet() {
     }
 	 
      public void premierPalet() {
-	pince.ouvrirPince();    
     	this.attraperPalet();
 	 this.marquerPalet(); 
 	this.lacherPalet(); 
 	System.out.print( "le palet est déposé");    
     }
      public void second&troisiemePalet() {
-    	deplacement.tournerAsync(180);
     	this.versCouleur("Bleu");
      	deplacement.tournerAsync(-90);
      	while (!(capteurUltrason.detecterPalet())){
