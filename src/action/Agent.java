@@ -73,15 +73,26 @@ public class Agent {
         pilot.stop(); // S'assurer que le robot arréte de tourner
         return this.liste;
     }
-// Méthode pour définir si la pince tient un palet
-    public void setaPalet(boolean aPalet) {
-        pince.setaPalet(aPalet); 
+public void attraperPalet() {
+    if (!pince.isEtat()) { 
+        System.out.println("La pince est ouverte. Fermeture pour attraper le palet.");
+        pince.fermerPince(); 
+        pince.setaPalet(true);
+    } else {
+        System.out.println("La pince est déjà fermée. Impossible d'attraper un autre palet.");
     }
+}
 
-    // Méthode pour vérifier si la pince tient un palet
-    public boolean isaPalet() {
-        return pince.isaPalet(); 
+public void lacherPalet() {
+    if (pince.isEtat()) { 
+        System.out.println("Relâchement du palet.");
+        pince.ouvrirPince(); 
+        pince.setaPalet(false); 
+    } else {
+        System.out.println("La pince est déjà ouverte. Aucun palet à relâcher.");
     }
+}
+
 
     // Method to find the closest object
     public float[] bestObjet(ArrayList<float[]> objets) {
