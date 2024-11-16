@@ -88,6 +88,45 @@ public class Agent {
         return bestObjet;
     }
 
+
+	 
+    public void attraperPalet() {
+    	pince.ouvrirPince();
+    	deplacement.getPilot().forward();
+	while(pilot.isMoving()) {
+    	     if(capteurTouche.isPressed()){
+		deplacement.stop();
+		pince.fermerPince();
+		return;
+    	     }
+    	}
+    }
+    
+    public void lacherPalet() {
+    	deplacement.avancer(10);
+    	pince.ouvrirPince();
+    	deplacement.avancer(-10);
+    	deplacement.getPilot().rotate(180);
+    	pince.fermerPince();
+    }
+     public void premierPalet() {
+    	this.attraperPalet();
+	 this.marquerPalet(); 
+	this.lacherPalet(); 
+	System.out.print( "le palet est déposé");    
+    }
+     public void secondEttroisiemePalet() {
+    	this.versCouleur("Bleu");
+     	deplacement.tournerAsync(-90);
+     	while (!(capteurUltrason.detecterPalet())){
+     		deplacement.avancerAsync(100);
+     	}
+        	this.attraperPalet();
+	        this.marquerPalet(); 
+	        this.lacherPalet();
+	        System.out.print( "le palet est déposé");
+        }
+    
     /**
      * Surveille la présence d'obstacles et effectue une esquive si un obstacle est
      * détecté.
@@ -118,12 +157,8 @@ public class Agent {
         // Déplacer le robot vers la ligne blanche (camp adverse)
         versCouleur(White);
 
-        // Avancer d'environ 5 cm pour s'assurer que le palet se trouve bien dans le
-        // camp adverse
-        deplacement.avancer(5);
         // Lâcher le palet
         lacherPalet();
-        deplacement.avancer(-10);
     }
 	 public void versCouleur(String color) {
     	while (!(couleur.getColorName() == color)) {
@@ -131,7 +166,68 @@ public class Agent {
     	}
     	deplacement.stop();	
     }
+	public void versCouleur(String couleurCible) {
+	    System.out.println("Recherche de la couleur : " + couleurCible);
+	    deplacement.forward();
+	    
+	    while (deplacement.getPilot().isMoving()) { 
+	        // Vérifier s'il y a un obstacle
+	    	Surveiller() ;
+	    	
+	       
+	        // Obtenir la couleur courante détectée
+	        String couleurCourante = capteurCouleur.getColorName(); // Assurez-vous que capteurCouleur a la méthode getColorName()
 
+	        // Comparer avec la couleur cible
+	        if (couleurCourante.equalsIgnoreCase(couleurCible)) {
+	            deplacement.stop(); // Arrêter le mouvement si la couleur cible est détectée
+	            System.out.println("Couleur cible détectée : " + couleurCourante);
+	            break; // Quitter la boucle
+	        }
+
+	        // Attente pour éviter un traitement trop rapide
+	        Delay.msDelay(100);
+	    }
+
+	
+
+}
+	public void esquive() {
+	   
+	    float distance = getDistance();
+	    // Étape 1 : Tourner de 90 degrés
+	    deplacement.tournerAsync(90); // Rotation horaire de 90 degrés
+	    Delay.msDelay(500); // Pause pour stabiliser après la rotation
+
+	    // Étape 2 : Avancer de 10 cm
+	    deplacement.avancer(10);
+	  
+	    Delay.msDelay(500);
+
+	    // Étape 3 : Tourner de -90 degrés
+	    deplacement.tournerAsync(-90); // Rotation antihoraire de 90 degrés
+	   
+
+	    // Étape 4 : Avancer d'une distance calculée
+	    deplacement.avancer(distance + 10); // Avancer de (distance détectée + 10 cm)
+	    
+	    Delay.msDelay(500);
+
+	    // Étape 5 : Tourner de -90 degrés
+	    deplacement.tournerAsync(-90); // Rotation antihoraire de 90 degrés
+	    Delay.msDelay(500);
+
+	    // Étape 6 : Avancer de 10 cm
+	    deplacement.avancer(10);
+	    System.out.println("Avancement final de 10 cm pour compléter l'esquive.");
+	    Delay.msDelay(500);
+	    deplacement.tournerAsync(90);
+	
+	    System.out.println("Esquive terminée.");
+	    
+	}
+
+	
     public boolean ChercherPalet() {
         ArrayList<float[]> objets = detecterLesObjets();
 
@@ -179,25 +275,7 @@ public class Agent {
 	   //on avance jusqu'à que la couleur detectée est Black (ligne centrale)
 	   versCouleur("Black");
     }
-	 
-     public void premierPalet() {
-    	this.attraperPalet();
-	 this.marquerPalet(); 
-	this.lacherPalet(); 
-	System.out.print( "le palet est déposé");    
-    }
-     public void second&troisiemePalet() {
-    	this.versCouleur("Bleu");
-     	deplacement.tournerAsync(-90);
-     	while (!(capteurUltrason.detecterPalet())){
-     		deplacement.avancerAsync(100);
-     	}
-        	this.attraperPalet();
-	        this.marquerPalet(); 
-	        this.lacherPalet();
-	        System.out.print( "le palet est déposé");
-        }
-    
+		
     public void run() {
         // Initialiser la direction du camp adverse
         directionCampAdverse = deplacement.getDirection();
@@ -209,86 +287,6 @@ public class Agent {
         capteurTouche.close();
         deplacement.stop();
         System.out.println("Program terminated.");
-    }
-	public void versCouleur(String couleurCible) {
-	    System.out.println("Recherche de la couleur : " + couleurCible);
-	    deplacement.forward();
-	    
-	    while (deplacement.getPilot().isMoving()) { 
-	        // Vérifier s'il y a un obstacle
-	    	Surveiller() ;
-	    	
-	       
-	        // Obtenir la couleur courante détectée
-	        String couleurCourante = capteurCouleur.getColorName(); // Assurez-vous que capteurCouleur a la méthode getColorName()
-
-	        // Comparer avec la couleur cible
-	        if (couleurCourante.equalsIgnoreCase(couleurCible)) {
-	            deplacement.stop(); // Arrêter le mouvement si la couleur cible est détectée
-	            System.out.println("Couleur cible détectée : " + couleurCourante);
-	            break; // Quitter la boucle
-	        }
-
-	        // Attente pour éviter un traitement trop rapide
-	        Delay.msDelay(100);
-	    }
-
-	
-
-}
-public void esquive() {
-	   
-		 float distance = getDistance();
-	    // Étape 1 : Tourner de 90 degrés
-	    deplacement.tournerAsync(90); // Rotation horaire de 90 degrés
-	    Delay.msDelay(500); // Pause pour stabiliser après la rotation
-
-	    // Étape 2 : Avancer de 10 cm
-	    deplacement.avancer(10);
-	  
-	    Delay.msDelay(500);
-
-	    // Étape 3 : Tourner de -90 degrés
-	    deplacement.tournerAsync(-90); // Rotation antihoraire de 90 degrés
-	   
-
-	    // Étape 4 : Avancer d'une distance calculée
-	    float distance = getDistance(); // Appel de la méthode pour obtenir la distance
-	    deplacement.avancer(distance + 10); // Avancer de (distance détectée + 10 cm)
-	    
-	    Delay.msDelay(500);
-
-	    // Étape 5 : Tourner de -90 degrés
-	    deplacement.tournerAsync(-90); // Rotation antihoraire de 90 degrés
-	    Delay.msDelay(500);
-
-	    // Étape 6 : Avancer de 10 cm
-	    deplacement.avancer(10);
-	    System.out.println("Avancement final de 10 cm pour compléter l'esquive.");
-	    Delay.msDelay(500);
-	deplacement.tournerAsync(90);
-	
-	    System.out.println("Esquive terminée.");
-	    
-	}
-
-    public void attraperPalet() {
-    	pince.ouvrirPince();
-    	deplacement.getPilot().forward();
-	while(pilot.isMoving()) {
-    	     if(capteurTouche.isPressed()){
-		deplacement.stop();
-		pince.fermerPince();
-    	     }
-    	}
-    }
-    
-    public void lacherPalet() {
-    	deplacement.avancer(10);
-    	pince.ouvrirPince();
-    	deplacement.avancer(-10);
-    	deplacement.getPilot().rotate(180);
-    	pince.fermerPince();
     }
 	
     public static void main(String[] args) {
