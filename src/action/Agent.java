@@ -69,28 +69,6 @@ public class Agent {
         pilot.stop(); // S'assurer que le robot arréte de tourner
         return this.liste;
     }
-public void attraperPalet() {
-    if (!pince.isEtat()) { 
-        System.out.println("La pince est ouverte. Fermeture pour attraper le palet.");
-        pince.fermerPince(); 
-        pince.setaPalet(true);
-    } else {
-        System.out.println("La pince est déjà fermée. Impossible d'attraper un autre palet.");
-    }
-}
-
-public void lacherPalet() {
-  
-    pince.ouvrirPince(); 
-    pince.setaPalet(false);  
-    System.out.println("Palet relâché.");
-
-    moteurGauche.rotate(-180);  
-    moteurDroit.rotate(-180);   
-
-    moteurGauche.rotate(180);  
-    moteurDroit.rotate(-180);  
-
 
 
     // Method to find the closest object
@@ -117,7 +95,7 @@ public void lacherPalet() {
      * @return true si un obstacle était détecté et esquivé, false sinon.
      */
     public boolean Surveiller() {
-        if (detectObjet()) {
+        if (capteurUltrason.detectObjet()) {
             System.out.println("Obstacle détecté lors de la surveillance. Initiation de l'évitement...");
             esquive();
             return true;
