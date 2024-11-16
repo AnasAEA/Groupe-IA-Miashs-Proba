@@ -124,7 +124,6 @@ public class Agent {
      	}
         	this.attraperPalet();
 	        this.marquerPalet(); 
-	        this.lacherPalet();
 	        System.out.print( "le palet est déposé");
         }
     
