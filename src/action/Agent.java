@@ -295,6 +295,24 @@ public void esquive() {
 	    System.out.println("Esquive terminée.");
 	    
 	}
+
+    public void attraperPalet() {
+    	pince.ouvrirPince();
+    	deplacement.getPilot().forward();
+    	while(!capteurTouche.isPressed()) {
+    		deplacement.stop();
+    		pince.fermerPince();
+    	}
+    }
+    
+    public void lacherPalet() {
+    	deplacement.avancer(10);
+    	pince.ouvrirPince();
+    	deplacement.avancer(-10);
+    	deplacement.getPilot().rotate(180);
+    	pince.fermerPince();
+    }
+	
     public static void main(String[] args) {
         Agent agent = new Agent();
         agent.run();
