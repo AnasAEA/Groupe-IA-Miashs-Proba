@@ -274,11 +274,13 @@ public void esquive() {
 
     public void attraperPalet() {
     	pince.ouvrirPince();
-    	while(!capteurTouche.isPressed()) {
-    		deplacement.getPilot().forward();
+    	deplacement.getPilot().forward();
+	while(pilot.isMoving()) {
+    	     if(capteurTouche.isPressed()){
+		deplacement.stop();
+		pince.fermerPince();
+    	     }
     	}
-    	deplacement.stop();
-	pince.fermerPince();
     }
     
     public void lacherPalet() {
