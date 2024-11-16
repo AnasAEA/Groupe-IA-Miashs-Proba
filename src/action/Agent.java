@@ -194,7 +194,7 @@ public class Agent {
 }
 	public void esquive() {
 	   
-	    float distance = getDistance();
+	    float distance = capteurUltrason.getDistance();
 	    // Étape 1 : Tourner de 90 degrés
 	    deplacement.tournerAsync(90); // Rotation horaire de 90 degrés
 	    Delay.msDelay(500); // Pause pour stabiliser après la rotation
