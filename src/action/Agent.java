@@ -9,7 +9,8 @@ import lejos.hardware.port.SensorPort;
 import lejos.robotics.navigation.MovePilot;
 import perception.CapteurTouche;
 import perception.CapteurUltrason;
-import perception.ColorSensor;
+import perception.capteurCouleur;
+import lejos.utility.Delay;
 
 public class Agent {
     // Existing class attributes
@@ -20,7 +21,7 @@ public class Agent {
     private float directionCampAdverse; // Déclaration en tant qu'attribut de classe
     private NXTRegulatedMotor motor; 
     private Pince pince ;
-    private ColorSensor couleur;
+    private capteurCouleur couleur;
 
     // Constructor
     public Agent() {
@@ -29,7 +30,7 @@ public class Agent {
         deplacement = new Deplacement();
 	motor = new NXTRegulatedMotor (MotorPort.C);
         pince = new Pince( motor);
-        couleur = new ColorSensor(SensorPort.S2);
+        couleur = new capteurCouleur(SensorPort.S2);
         
     }
 
@@ -93,7 +94,7 @@ public class Agent {
     public void attraperPalet() {
     	pince.ouvrirPince();
     	deplacement.getPilot().forward();
-	while(pilot.isMoving()) {
+	while(deplacement.getPilot().isMoving()) {
     	     if(capteurTouche.isPressed()){
 		deplacement.stop();
 		pince.fermerPince();
@@ -119,7 +120,7 @@ public class Agent {
     	this.versCouleur("Bleu");
      	deplacement.tournerAsync(-90);
      	while (!(capteurUltrason.detecterPalet())){
-     		deplacement.avancerAsync(100);
+     		deplacement.avancerSync(100);
      	}
         	this.attraperPalet();
 	        this.marquerPalet(); 
@@ -155,17 +156,12 @@ public class Agent {
         }
 
         // Déplacer le robot vers la ligne blanche (camp adverse)
-        versCouleur(White);
+        versCouleur("White");
 
         // Lâcher le palet
         lacherPalet();
     }
-	 public void versCouleur(String color) {
-    	while (!(couleur.getColorName() == color)) {
-    		deplacement.avancerAsync(directionCampAdverse);
-    	}
-    	deplacement.stop();	
-    }
+
 	public void versCouleur(String couleurCible) {
 	    System.out.println("Recherche de la couleur : " + couleurCible);
 	    deplacement.getPilot().forward();
@@ -176,7 +172,7 @@ public class Agent {
 	    	
 	       
 	        // Obtenir la couleur courante détectée
-	        String couleurCourante = capteurCouleur.getColorName(); // Assurez-vous que capteurCouleur a la méthode getColorName()
+	        String couleurCourante = couleur.getColorName(); // Assurez-vous que capteurCouleur a la méthode getColorName()
 
 	        // Comparer avec la couleur cible
 	        if (couleurCourante.equalsIgnoreCase(couleurCible)) {
