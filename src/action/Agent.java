@@ -234,25 +234,31 @@ public void lacherPalet() {
         deplacement.stop();
         System.out.println("Program terminated.");
     }
-public void verscouleurs() {
-    String couleurCourante = couleur.getColorName(); // Obtenir la couleur initiale
-    System.out.println("Couleur initiale détectée : " + couleurCourante);
+	public void versCouleur(String couleurCible) {
+	    System.out.println("Recherche de la couleur : " + couleurCible);
+	    deplacement.forward();
+	    
+	    while (deplacement.getPilot().isMoving()) { 
+	        // Vérifier s'il y a un obstacle
+	    	Surveiller() ;
+	    	
+	       
+	        // Obtenir la couleur courante détectée
+	        String couleurCourante = capteurCouleur.getColorName(); // Assurez-vous que capteurCouleur a la méthode getColorName()
 
-    while (!Button.ESCAPE.isDown()) { // La boucle se poursuit tant que l'utilisateur ne quitte pas
-        deplacement.avancerAsync(10); // Avancer sur une petite distance en continu
-        Delay.msDelay(100); // Pause pour éviter de lire trop rapidement les données du capteur
+	        // Comparer avec la couleur cible
+	        if (couleurCourante.equalsIgnoreCase(couleurCible)) {
+	            deplacement.stop(); // Arrêter le mouvement si la couleur cible est détectée
+	            System.out.println("Couleur cible détectée : " + couleurCourante);
+	            break; // Quitter la boucle
+	        }
 
-        String nouvelleCouleur = couleur.getColorName(); // Lire la nouvelle couleur
-        if (!nouvelleCouleur.equals(couleurCourante)) { // Comparer avec la dernière couleur détectée
-            deplacement.stop(); // Arrêter le mouvement
-            System.out.println("Nouvelle couleur détectée : " + nouvelleCouleur);
-            couleurCourante = nouvelleCouleur; // Mettre à jour la couleur courante
+	        // Attente pour éviter un traitement trop rapide
+	        Delay.msDelay(100);
+	    }
 
-            // Pause pour permettre une observation ou une action avant de continuer
-            Delay.msDelay(1000);
-        }
-    }
-    System.out.println("Fin de la détection des couleurs.");
+	
+
 }
 public void esquive() {
 	   
