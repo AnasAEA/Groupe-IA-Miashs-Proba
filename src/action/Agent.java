@@ -214,7 +214,7 @@ public class Agent {
     	 deplacement.tournerAsync(180);
     	 Agent a = new Agent();
      	 a.versCouleur("Bleu");
-     	deplacement.tournerAsync(90);
+     	deplacement.tournerAsync(-90);
      	while (!(capteurUltrason.detecterPalet())){
      		deplacement.avancerAsync(100);
      	}
@@ -225,7 +225,7 @@ public class Agent {
         	deplacement.stop();
         	pince.ouvrirPince();
         	pince.fermerPince();
-        	deplacement.tournerAsync(90);
+        	deplacement.tournerAsync(-90);
         	Agent b = new Agent();
         	b.versCouleur("White");
         	deplacement.avancerAsync(5);
