@@ -199,51 +199,26 @@ public void lacherPalet() {
 	   versCouleur("Black");
     }
 	 
-    public void premierPalet() {
-    	while (!(capteurTouche.isPressed())) {
-    	deplacement.avancerAsync(directionCampAdverse);
-    	//esquive();
-    	}
-    	deplacement.stop();
-    	pince.ouvrirPince();
-    	pince.fermerPince();
-    	deplacement.tournerAsync(90);
-    	deplacement.avancerAsync(15);
-    	deplacement.tournerAsync(90);
-    	Agent a = new Agent();
-    	a.versCouleur("White");
-    	deplacement.avancerAsync(5);
-    	pince.ouvrirPince();
-    	System.out.print( "le palet est déposé");
-    	pince.fermerPince();
+     public void premierPalet() {
+	pince.ouvrirPince();    
+    	this.attraperPalet();
+	 this.marquerPalet(); 
+	this.lacherPalet(); 
+	System.out.print( "le palet est déposé");    
     }
-     public void secondPalet() {
-    	 deplacement.tournerAsync(180);
-    	 Agent a = new Agent();
-     	 a.versCouleur("Bleu");
+     public void second&troisiemePalet() {
+    	deplacement.tournerAsync(180);
+    	this.versCouleur("Bleu");
      	deplacement.tournerAsync(-90);
      	while (!(capteurUltrason.detecterPalet())){
      		deplacement.avancerAsync(100);
      	}
-     	while (!(capteurTouche.isPressed())) {
-        	deplacement.avancerAsync(directionCampAdverse);
-        	//esquive();
-        	}
-        	deplacement.stop();
-        	pince.ouvrirPince();
-        	pince.fermerPince();
-        	deplacement.tournerAsync(-90);
-        	Agent b = new Agent();
-        	b.versCouleur("White");
-        	deplacement.avancerAsync(5);
-        	pince.ouvrirPince();
-        	System.out.print( "le palet est déposé");
-        	pince.fermerPince();
+        	this.attraperPalet();
+	        this.marquerPalet(); 
+	        this.lacherPalet();
+	        System.out.print( "le palet est déposé");
         }
-     public void troisiemePalet() {
-    	 Agent c = new Agent();
-    	 c.secondPalet();
-     }
+    
     public void run() {
         // Initialiser la direction du camp adverse
         directionCampAdverse = deplacement.getDirection();
