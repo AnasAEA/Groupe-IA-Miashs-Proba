@@ -73,6 +73,15 @@ public class Agent {
         pilot.stop(); // S'assurer que le robot arréte de tourner
         return this.liste;
     }
+// Méthode pour définir si la pince tient un palet
+    public void setaPalet(boolean aPalet) {
+        pince.setaPalet(aPalet); 
+    }
+
+    // Méthode pour vérifier si la pince tient un palet
+    public boolean isaPalet() {
+        return pince.isaPalet(); 
+    }
 
     // Method to find the closest object
     public float[] bestObjet(ArrayList<float[]> objets) {
