@@ -80,14 +80,17 @@ public void attraperPalet() {
 }
 
 public void lacherPalet() {
-    if (pince.isEtat()) { 
-        System.out.println("Relâchement du palet.");
-        pince.ouvrirPince(); 
-        pince.setaPalet(false); 
-    } else {
-        System.out.println("La pince est déjà ouverte. Aucun palet à relâcher.");
-    }
-}
+  
+    pince.ouvrirPince(); 
+    pince.setaPalet(false);  
+    System.out.println("Palet relâché.");
+
+    moteurGauche.rotate(-180);  
+    moteurDroit.rotate(-180);   
+
+    moteurGauche.rotate(180);  
+    moteurDroit.rotate(-180);  
+
 
 
     // Method to find the closest object
