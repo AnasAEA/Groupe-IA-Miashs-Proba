@@ -38,10 +38,6 @@ public class Agent {
      * 
      * @return true si un objet est détecté, false sinon.
      */
-    public boolean detectObjet() {
-        float distanceDobjet = capteurUltrason.getDistance();
-        return distanceDobjet < 50;
-    }
 
     // Method to detect objects by rotating 360 degrees
     public ArrayList<float[]> detecterLesObjets() {
