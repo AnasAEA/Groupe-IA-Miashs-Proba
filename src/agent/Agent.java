@@ -3,8 +3,7 @@ package agent;
 import java.util.ArrayList;
 
 import action.Deplacement;
-import lejos.hardware.motor.NXTRegulatedMotor;
-import lejos.hardware.port.MotorPort;
+
 import lejos.hardware.port.SensorPort;
 import lejos.robotics.navigation.MovePilot;
 import perception.CapteurTouche;
@@ -19,7 +18,6 @@ public class Agent {
     private Deplacement deplacement;
     private ArrayList<float[]> liste = new ArrayList<>();
     private float directionCampAdverse; // Déclaration en tant qu'attribut de classe
-    private NXTRegulatedMotor motor; 
     private Pince pince ;
     private capteurCouleur couleur;
 
@@ -28,9 +26,8 @@ public class Agent {
         capteurUltrason = new CapteurUltrason(SensorPort.S1);
         capteurTouche = new CapteurTouche(SensorPort.S2);
         deplacement = new Deplacement();
-	motor = new NXTRegulatedMotor (MotorPort.C);
-        pince = new Pince( motor);
-        couleur = new capteurCouleur(SensorPort.S2);
+        pince = new Pince();
+        couleur = new capteurCouleur(SensorPort.S4);
         
     }
 
@@ -110,12 +107,14 @@ public class Agent {
     	deplacement.getPilot().rotate(180);
     	pince.fermerPince();
     }
+	
      public void premierPalet() {
     	this.attraperPalet();
-	 this.marquerPalet(); 
+	this.marquerPalet(); 
 	this.lacherPalet(); 
 	System.out.print( "le palet est déposé");    
     }
+	
      public void secondEttroisiemePalet() {
     	this.versCouleur("Bleu");
      	deplacement.tournerAsync(-90);
