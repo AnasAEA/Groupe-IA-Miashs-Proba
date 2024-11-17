@@ -3,6 +3,7 @@ package agent;
 import java.util.ArrayList;
 
 import action.Deplacement;
+import action.Pince;
 
 import lejos.hardware.port.SensorPort;
 import lejos.robotics.navigation.MovePilot;
