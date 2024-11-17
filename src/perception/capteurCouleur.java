@@ -58,4 +58,8 @@ public class capteurCouleur {
                 lastDetectedColor = currentColor; // Met à jour la couleur détectée
             }
         }
+
+        public void close() {
+            this.close();
+        }
     }
