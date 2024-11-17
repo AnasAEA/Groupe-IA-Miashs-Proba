@@ -48,7 +48,13 @@ public class Deplacement {
 
 	public void tournerAsync(double angle) { //Rotation asynchrone de l’angle en paramètre
 		this.getPilot().setAngularSpeed(30);
-	        pilot.rotate(angle, true);
+		double angleToTurn;
+		if (angleToTurn > 0) {
+              	       angleToTurn -= 7; // If turning clockwise, reduce angle
+            	} else if (angleToTurn < 0) {
+               	       angleToTurn += 7; // If turning counter-clockwise, increase angle
+            	}
+		pilot.rotate(angleToTurn, true);
 	        // Pas besoin de mettre à jour 'direction' ici ; le PoseProvider s'en charge
     	}
 
