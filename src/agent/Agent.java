@@ -39,7 +39,6 @@ public class Agent {
 
     // Method to detect objects by rotating 360 degrees
     public ArrayList<float[]> detecterLesObjets() {
-        deplacement.getPilot().setAngularSpeed(30); // Régler la vitesse de rotation
         deplacement.tournerAsync(360); // Démarrer une rotation de 360 degrés
         MovePilot pilot = deplacement.getPilot();
         this.liste.clear();
@@ -104,7 +103,7 @@ public class Agent {
     	deplacement.avancer(10);
     	pince.ouvrirPince();
     	deplacement.avancer(-10);
-    	deplacement.getPilot().rotate(180);
+    	deplacement.tournerAsync(180);
     	pince.fermerPince();
     }
 	
@@ -152,10 +151,10 @@ public class Agent {
         } else if (angleToTurn < -180) {
             angleToTurn += 360;
         }
-
+	deplacement.tournerAsync(angleToTurn);
         // Déplacer le robot vers la ligne blanche (camp adverse)
         versCouleur("White");
-
+	
         // Lâcher le palet
         lacherPalet();
     }
@@ -234,7 +233,6 @@ public class Agent {
 
             System.out.println("Best object found at distance: " + distanceToObject + " cm, direction: "
                     + directionToObject + " degrees.");
-            deplacement.getPilot().setAngularSpeed(30); // Régler la vitesse de rotation
             // Calculate angle to turn
             float currentDirection = deplacement.getDirection();
             float angleToTurn = directionToObject - currentDirection;
@@ -254,7 +252,7 @@ public class Agent {
             }
 
             // Rotate to face the object
-            deplacement.getPilot().rotate(angleToTurn);
+            deplacement.tournerAsync(angleToTurn);
 
             // Check if it's a palet
             boolean isPalet = capteurUltrason.detecterPalet();
