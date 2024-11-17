@@ -21,6 +21,8 @@ public class Agent {
     private float directionCampAdverse; // Déclaration en tant qu'attribut de classe
     private Pince pince ;
     private capteurCouleur couleur;
+    private int compteur;	
+	
 
     // Constructor
     public Agent() {
@@ -158,6 +160,7 @@ public class Agent {
 	
         // Lâcher le palet
         lacherPalet();
+	compteur = compteur +1;     
     }
 
 	public void versCouleur(String couleurCible) {
