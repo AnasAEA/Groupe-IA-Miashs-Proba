@@ -197,8 +197,8 @@ public class Agent {
 	    deplacement.tournerAsync(90); // Rotation horaire de 90 degrés
 	    Delay.msDelay(500); // Pause pour stabiliser après la rotation
 
-	    // Étape 2 : Avancer de 10 cm
-	    deplacement.avancer(10);
+	    // Étape 2 : Avancer de 25 cm
+	    deplacement.avancer(25);
 	  
 	    Delay.msDelay(500);
 
@@ -215,8 +215,8 @@ public class Agent {
 	    deplacement.tournerAsync(-90); // Rotation antihoraire de 90 degrés
 	    Delay.msDelay(500);
 
-	    // Étape 6 : Avancer de 10 cm
-	    deplacement.avancer(10);
+	    // Étape 6 : Avancer de 25cm
+	    deplacement.avancer(25);
 	    System.out.println("Avancement final de 10 cm pour compléter l'esquive.");
 	    Delay.msDelay(500);
 	    deplacement.tournerAsync(90);
