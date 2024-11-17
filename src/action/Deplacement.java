@@ -39,6 +39,7 @@ public class Deplacement {
 	}
 
 	public void avancerSync(double distance) { //Ava ncement asynchrone de la distance en paramètres
+		 //this.getPilot().setAngularSpeed(30);
    		 pilot.travel(distance, true); 
 	}
 	
