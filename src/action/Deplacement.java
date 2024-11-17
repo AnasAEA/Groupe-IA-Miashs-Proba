@@ -46,9 +46,8 @@ public class Deplacement {
   		 pilot.travel(distance); 
 	}
 
-	public void tournerAsync(double angle) { //Rotation asynchrone de l’angle en paramètre
+	public void tournerAsync(double angleToTurn) { //Rotation asynchrone de l’angle en paramètre
 		this.getPilot().setAngularSpeed(30);
-		double angleToTurn;
 		if (angleToTurn > 0) {
               	       angleToTurn -= 7; // If turning clockwise, reduce angle
             	} else if (angleToTurn < 0) {
