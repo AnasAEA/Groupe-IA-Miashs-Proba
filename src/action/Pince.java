@@ -1,51 +1,49 @@
 package action;
 
+import lejos.hardware.motor.Motor;
 import lejos.hardware.motor.NXTRegulatedMotor;
+import lejos.utility.Delay;
+
 
 public class Pince {
     
-    private NXTRegulatedMotor pinceMotor;
+    private NXTRegulatedMotor pince;
+    private int vitesseMoteur = 1000;
     private boolean etat; // true si les pinces sont fermées, false si ouvertes
 
-    public Pince(NXTRegulatedMotor motor) {
-        this.pinceMotor = motor;
-        this.pinceMotor.setSpeed(motor.getSpeed() * 2); // Ajustement de la vitesse
+    public Pince() {
+        pince = Motor.D;
+        pince.setSpeed(vitesseMoteur);
         this.etat = true; // Initialisé comme fermé
     }
 
     // Active les pinces pour saisir un palet
     public void fermerPince() {
-        if (!etat) { // Si les pinces ne sont pas déjà fermées
-            pinceMotor.rotate(-360 * 3); // Ferme les pinces (ajustez la rotation si nécessaire)
-            while (pinceMotor.isMoving()) {}
-            etat = true;
-            System.out.println("Palet saisi.");
-        }
+        if(etat) {
+	        pince.rotate(-1800);
+	        while (pince.isMoving()) {
+	            Delay.msDelay(100); // Wait for 100 milliseconds
+	        }
+	        etat=false;
+	        }
+	        pince.stop();
     }
 
     // Relâche le palet
     public void ouvrirPince() {
-        if (etat) { // Si les pinces ne sont pas déjà ouvertes
-            pinceMotor.rotate(360 * 3); // Ouvre les pinces
-            while (pinceMotor.isMoving()) {}
-            etat = false;
-            System.out.println("Palet relâché.");
+        if(!etat) {
+        pince.rotateTo(1800);
+        while (pince.isMoving()) {
+            Delay.msDelay(100); // Wait for 100 milliseconds
         }
+        etat=true;
+        }
+        pince.stop();
     }
 
+    public void setPincesOuvertes(boolean pincesOuvertes) { 
 
-    // Vérifie si les pinces sont fermées
-    public boolean isClose() {
-        return etat;
-    }
+		this.etat = pincesOuvertes;
+	}
 
-    // Vérifie si les pinces sont ouvertes
-    public boolean isOpen() {
-        return !etat;
-    }
-
-    // Permet de définir manuellement l'état des pinces
-    public void setClosed(boolean etat) {
-        this.etat = etat;
-    }
 }
