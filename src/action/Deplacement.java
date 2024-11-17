@@ -25,7 +25,7 @@ public class Deplacement {
 		Wheel roue2 = WheeledChassis.modelWheel((RegulatedMotor)Motor.A, DIAMETRE).offset(6.2);
 		Chassis chassis = new WheeledChassis(new Wheel[] {roue1, roue2}, WheeledChassis.TYPE_DIFFERENTIAL);
 		pilot = new MovePilot(chassis);
-        poseProvider = new OdometryPoseProvider(pilot); // Initialisation du PoseProvider
+        	poseProvider = new OdometryPoseProvider(pilot); // Initialisation du PoseProvider
 
 	}
 	
@@ -39,7 +39,6 @@ public class Deplacement {
 	}
 
 	public void avancerSync(double distance) { //Ava ncement asynchrone de la distance en paramètres
-		 //this.getPilot().setAngularSpeed(30);
    		 pilot.travel(distance, true); 
 	}
 	
