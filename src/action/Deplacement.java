@@ -57,6 +57,18 @@ public class Deplacement {
 	        // Pas besoin de mettre à jour 'direction' ici ; le PoseProvider s'en charge
     	}
 
+	public void tourner(double angleToTurn) { //Rotation asynchrone de l’angle en paramètre
+		this.modifVitRot(30);
+		if (angleToTurn > 0) {
+              	       angleToTurn -= 7; // If turning clockwise, reduce angle
+            	} 
+		else if (angleToTurn < 0) {
+               	       angleToTurn += 7; // If turning counter-clockwise, increase angle
+            	}
+		pilot.rotate(angleToTurn);
+	        // Pas besoin de mettre à jour 'direction' ici ; le PoseProvider s'en charge
+    	}
+
 	public void modifVitRot(double s){ //modifie la vitesse de rotation en degrés par seconde
 		pilot.setAngularSpeed(s);
 	}
