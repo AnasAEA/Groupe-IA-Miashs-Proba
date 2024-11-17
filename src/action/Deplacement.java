@@ -47,7 +47,7 @@ public class Deplacement {
 	}
 
 	public void tournerAsync(double angleToTurn) { //Rotation asynchrone de l’angle en paramètre
-		this.getPilot().modifVitRot(30);
+		this.modifVitRot(30);
 		if (angleToTurn > 0) {
               	       angleToTurn -= 7; // If turning clockwise, reduce angle
             	} else if (angleToTurn < 0) {
