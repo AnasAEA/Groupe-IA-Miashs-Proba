@@ -28,7 +28,7 @@ public class Agent {
         deplacement = new Deplacement();
         pince = new Pince();
         couleur = new capteurCouleur(SensorPort.S4);
-        
+        deplacement.modifVitLin(100);
     }
 
     /**
@@ -162,6 +162,8 @@ public class Agent {
 
 	public void versCouleur(String couleurCible) {
 	    System.out.println("Recherche de la couleur : " + couleurCible);
+	    deplacement.modifVitLin(30);
+
 	    deplacement.getPilot().forward();
 	    
 	    while (deplacement.getPilot().isMoving()) { 
@@ -182,8 +184,7 @@ public class Agent {
 	        // Attente pour éviter un traitement trop rapide
 	        Delay.msDelay(100);
 	    }
-
-	
+	deplacement.modifVitLin(100);
 
 }
 	public void esquive() {
