@@ -31,7 +31,7 @@ public class Agent {
         deplacement = new Deplacement();
         pince = new Pince();
         couleur = new capteurCouleur(SensorPort.S4);
-        deplacement.modifVitLin(100);
+        deplacement.modifVitLin(30);
     }
 
     /**
@@ -51,7 +51,7 @@ public class Agent {
             float directionActuelle = deplacement.getDirection(); // Obtenir l'orientation actuelle
 
             // Collecter les données si la distance est inférieure à un certain seuil
-            if (distance < 60.0f) {
+            if (distance < 60.0f && distance >= 32.0f) {
                 float[] objet = { distance, directionActuelle };
                 this.liste.add(objet);
                 System.out.println("Objet détecté é une distance de : " + distance + " cm, direction : "
@@ -110,22 +110,45 @@ public class Agent {
     	pince.fermerPince();
     }
 	
+     public void devierDeLaLigne() {
+    	    deplacement.tourner(90);
+  	    Delay.msDelay(500);
+  	    deplacement.avancer(25);
+  	    Delay.msDelay(500);
+  	    deplacement.tourner(-90);
+    }
+    
      public void premierPalet() {
     	this.attraperPalet();
-	this.marquerPalet(); 
-	this.lacherPalet(); 
-	System.out.print( "le palet est déposé");    
+    	this.devierDeLaLigne();
+    	this.marquerPalet(); 
+    	System.out.print( "le palet est déposé");    
     }
 	
-     public void secondEttroisiemePalet() {
-    	this.versCouleur("Bleu");
-     	deplacement.tournerAsync(-90);
-     	while (!(capteurUltrason.detecterPalet())){
-     		deplacement.avancerSync(100);
+     public void secondEttroisiemePalet(String directionTourn) {
+    	deplacement.avancer(50);
+    	if(directionTourn.equalsIgnoreCase("Gauche"))
+    		deplacement.tourner(90);
+    	else
+    		deplacement.tourner(-90);
+    	
+     	int i=0;
+     	while (i <3 && !(capteurUltrason.detecterPalet()) ){
+     		deplacement.avancerSync(30);
+     		while(deplacement.getPilot().isMoving()) {
+     			Surveiller(); 
+         		Delay.msDelay(100);
+     		}
+     		Delay.msDelay(100);
+     		i++;
      	}
-        	this.attraperPalet();
-	        this.marquerPalet(); 
-	        System.out.print( "le palet est déposé");
+     	if(i!=3) {	
+     		this.attraperPalet();
+     		this.marquerPalet(); 
+     		System.out.print( "le palet est déposé");
+     	}
+     		//TODO : Cas ou aucun Palet sur la ligne Bleu
+     		deplacement.stop();
         }
     
     /**
@@ -135,7 +158,7 @@ public class Agent {
      * @return true si un obstacle était détecté et esquivé, false sinon.
      */
     public boolean Surveiller() {
-        if (capteurUltrason.detectObjet()) {
+        if (capteurUltrason.detectObjet(25)) {
             System.out.println("Obstacle détecté lors de la surveillance. Initiation de l'évitement...");
             esquive();
             return true;
@@ -148,12 +171,6 @@ public class Agent {
         float currentDirection = deplacement.getDirection();
         float angleToTurn = directionCampAdverse - currentDirection;
 
-        // Ajuster l'angle pour qu'il se situe entre -180 et 180 degrés
-        if (angleToTurn > 180) {
-            angleToTurn -= 360;
-        } else if (angleToTurn < -180) {
-            angleToTurn += 360;
-        }
 	deplacement.tournerAsync(angleToTurn);
         // Déplacer le robot vers la ligne blanche (camp adverse)
         versCouleur("White");
@@ -170,8 +187,6 @@ public class Agent {
 	    deplacement.getPilot().forward();
 	    
 	    while (deplacement.getPilot().isMoving()) { 
-	        // Vérifier s'il y a un obstacle
-	    	Surveiller() ;
 	    	
 	       
 	        // Obtenir la couleur courante détectée
@@ -184,106 +199,57 @@ public class Agent {
 	            break; // Quitter la boucle
 	        }
 
+	        // Vérifier s'il y a un obstacle
+	    	Surveiller() ;
+		    
 	        // Attente pour éviter un traitement trop rapide
 	        Delay.msDelay(100);
 	    }
-	deplacement.modifVitLin(100);
-
 }
-	public void esquive() {
-	   
-	    float distance = capteurUltrason.getDistance();
-	    // Étape 1 : Tourner de 90 degrés
-	    deplacement.tournerAsync(90); // Rotation horaire de 90 degrés
-	    Delay.msDelay(500); // Pause pour stabiliser après la rotation
-
-	    // Étape 2 : Avancer de 25 cm
-	    deplacement.avancer(25);
-	  
-	    Delay.msDelay(500);
-
-	    // Étape 3 : Tourner de -90 degrés
-	    deplacement.tournerAsync(-90); // Rotation antihoraire de 90 degrés
-	   
-
-	    // Étape 4 : Avancer d'une distance calculée
-	    deplacement.avancer(distance + 10); // Avancer de (distance détectée + 10 cm)
-	    
-	    Delay.msDelay(500);
-
-	    // Étape 5 : Tourner de -90 degrés
-	    deplacement.tournerAsync(-90); // Rotation antihoraire de 90 degrés
-	    Delay.msDelay(500);
-
-	    // Étape 6 : Avancer de 25cm
-	    deplacement.avancer(25);
-	    System.out.println("Avancement final de 10 cm pour compléter l'esquive.");
-	    Delay.msDelay(500);
-	    deplacement.tournerAsync(90);
 	
-	    System.out.println("Esquive terminée.");
-	    
+	public void esquive() {
+	    float distance = capteurUltrason.getDistance();
+	    deplacement.tournerAsync(90); Delay.msDelay(500); 
+	    deplacement.avancer(25);Delay.msDelay(500);
+	    deplacement.tournerAsync(-90);
+	    deplacement.avancer(distance + 10);Delay.msDelay(500);                 
+	    deplacement.tournerAsync(-90);Delay.msDelay(500);
+	    deplacement.avancer(25); Delay.msDelay(500);
+	    deplacement.tournerAsync(90);
+	    System.out.println("Esquive terminée.");    
 	}
 
 	
     public boolean ChercherPalet() {
         ArrayList<float[]> objets = detecterLesObjets();
-
-        // Find the best object (closest)
         float[] bestObj = bestObjet(objets);
-
         if (bestObj != null) {
             float distanceToObject = bestObj[0];
             float directionToObject = bestObj[1];
 
             System.out.println("Best object found at distance: " + distanceToObject + " cm, direction: "
                     + directionToObject + " degrees.");
-            // Calculate angle to turn
+            // Calcul de l'angle de rotation
             float currentDirection = deplacement.getDirection();
             float angleToTurn = directionToObject - currentDirection;
 
-            // Compensate for the 7-degree deviation
-            if (angleToTurn > 0) {
-                angleToTurn -= 7; // If turning clockwise, reduce angle
-            } else if (angleToTurn < 0) {
-                angleToTurn += 7; // If turning counter-clockwise, increase angle
-            }
-
-            // Adjust angle to be between -180 and 180 degrees
-            if (angleToTurn > 180) {
-                angleToTurn -= 360;
-            } else if (angleToTurn < -180) {
-                angleToTurn += 360;
-            }
-
             // Rotate to face the object
-            deplacement.tournerAsync(angleToTurn);
+            deplacement.tourner(angleToTurn);
 
-            // Check if it's a palet
+            // Verifier si c'est un palet
             boolean isPalet = capteurUltrason.detecterPalet();
             return isPalet;
         }
         return false;
     }
     
-    public void ligneCentrale() {
-	   //apres avoir deposer le palet on tourne 180 deg
-	   deplacement.tournerAsync(180); 
-	   //on avance jusqu'à que la couleur detectée est Black (ligne centrale)
-	   versCouleur("Black");
+    public void ligneCentrale() { 
+	deplacement.avancer(100);
     }
 		
     public void run() {
         // Initialiser la direction du camp adverse
         directionCampAdverse = deplacement.getDirection();
-        System.out
-                .println("Direction du camp adverse initialement réglée à : " + directionCampAdverse + " degrés.");
-
-        // Cleanup resources
-        capteurUltrason.close();
-        capteurTouche.close();
-        deplacement.stop();
-        System.out.println("Program terminated.");
     }
 	
     public static void main(String[] args) {
