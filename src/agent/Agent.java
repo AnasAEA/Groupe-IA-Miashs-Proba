@@ -34,6 +34,15 @@ public class Agent {
         deplacement.modifVitLin(30);
     }
 
+
+    public void corrigeDirection(float directionPrecedente) {
+	float currentDirection = this.getDirection();
+        if (currentDirection != directionPrecedente ) {
+            System.out.println("Correction de direction : " + currentDirection);
+            pilot.rotate(-currentDirection); // Ajuste l'orientation
+        }
+    }
+
     /**
      * Détecte tout objet a une distance inférieure é 50 cm.
      * 
