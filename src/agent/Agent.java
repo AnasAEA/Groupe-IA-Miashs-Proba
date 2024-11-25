@@ -255,6 +255,14 @@ public class Agent {
     public void ligneCentrale() { 
 	deplacement.avancer(100);
     }
+
+    public void autresPalets() {
+    	ligneCentrale();
+    	while(!ChercherPalet()) {
+    	}
+    	attraperPalet();
+    	marquerPalet();
+    }
 		
     public void run() {
         // Initialiser la direction du camp adverse
