@@ -38,7 +38,7 @@ public class Deplacement {
 		return pilot;
 	}
 
-	public void avancerSync(double distance) { //Ava ncement asynchrone de la distance en paramètres
+	public void avancerSync(double distance) { //Avancement synchrone de la distance en paramètres
    		 pilot.travel(distance, true); 
 	}
 	
@@ -46,28 +46,45 @@ public class Deplacement {
   		 pilot.travel(distance); 
 	}
 
-	public void tournerAsync(double angleToTurn) { //Rotation asynchrone de l’angle en paramètre
-		this.modifVitRot(30);
+	public void tournerAsync(double angleToTurn) { //Rotation synchrone de l’angle en paramètre
+		this.modifVitRot(50);
 		if (angleToTurn > 0) {
-              	       angleToTurn -= 7; // If turning clockwise, reduce angle
+              	       angleToTurn += 13; // If turning counter-clockwise
             	} else if (angleToTurn < 0) {
-               	       angleToTurn += 7; // If turning counter-clockwise, increase angle
+               	       angleToTurn += 4; // If turning clockwise
             	}
 		pilot.rotate(angleToTurn, true);
 	        // Pas besoin de mettre à jour 'direction' ici ; le PoseProvider s'en charge
     	}
 
 	public void tourner(double angleToTurn) { //Rotation asynchrone de l’angle en paramètre
-		this.modifVitRot(30);
+		this.modifVitRot(50);
 		if (angleToTurn > 0) {
-              	       angleToTurn -= 7; // If turning clockwise, reduce angle
+              	       angleToTurn += 9; // If turning counter-clockwise
             	} 
 		else if (angleToTurn < 0) {
-               	       angleToTurn += 7; // If turning counter-clockwise, increase angle
+               	       angleToTurn += 3; // If turning clockwise
             	}
 		pilot.rotate(angleToTurn);
 	        // Pas besoin de mettre à jour 'direction' ici ; le PoseProvider s'en charge
     	}
+
+	//Methode Speciale pour les cas des rotations qui necessitent interagir avec le pose provider (existence d'une erreur )
+	public void tourner(double angleToTurn, boolean heading) {
+		if(heading) {
+			if (angleToTurn > 0) {
+	              	       angleToTurn +=13; //previous value -9
+	            	} 
+			else if (angleToTurn < 0) {
+	               	       angleToTurn -= 2; //previous value 11
+	            	}
+		        // Pas besoin de mettre à jour 'direction' ici ; le PoseProvider s'en charge
+			pilot.rotate(angleToTurn);
+	    	}
+		else {
+			tourner(angleToTurn);
+		}
+	}
 
 	public void modifVitRot(double s){ //modifie la vitesse de rotation en degrés par seconde
 		pilot.setAngularSpeed(s);
@@ -83,4 +100,5 @@ public class Deplacement {
 	public void stop() {
 		pilot.stop();
 	}
+	
 }
