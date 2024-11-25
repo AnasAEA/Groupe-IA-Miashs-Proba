@@ -7,9 +7,9 @@ import lejos.robotics.SampleProvider;
 
 public class CapteurUltrason {
 	Float distanceActuelle = Float.MAX_VALUE; //distance actuelle
-	Float distancePrecedente = Float.MAX_VALUE; //la derniÃ¨re distance qui a Ã©tÃ© captÃ©e avant celle actuelle
-	EV3UltrasonicSensor ultrasonicSensor;  //instance de la classe prÃ©dÃ©finie EV3UltrasonicSensor
-    	SampleProvider distanceProvider; //echantillon de distance donnÃ© par le capteur ultrason
+	Float distancePrecedente = Float.MAX_VALUE; //la derniére distance qui a été captée avant celle actuelle
+	EV3UltrasonicSensor ultrasonicSensor;  //instance de la classe prédéfinie EV3UltrasonicSensor
+    	SampleProvider distanceProvider; //echantillon de distance donné par le capteur ultrason
     	float[] samples;  //tableau qui stocke les distances.	
     	Deplacement deplacement;
     	ArrayList <float[][]> liste;
@@ -24,7 +24,7 @@ public class CapteurUltrason {
 
 		
 
-	public float getDistance() {                  //rÃ©cupÃ¨re la distance captÃ©e par l'ultrason et la stocke dans le tableau aprÃ¨s une conversion en cm
+	public float getDistance() {                  //récupére la distance captée par l'ultrason et la stocke dans le tableau aprÃ¨s une conversion en cm
 	        distanceProvider.fetchSample(samples, 0); 
 	        float distanceCm = samples[0] * 100; 
 	        return distanceCm; 
@@ -32,12 +32,30 @@ public class CapteurUltrason {
 
 	
 	public boolean detecterPalet() {
-	    // Démarrer le déplacement en avant
-	    deplacement.getPilot().forward();
 	    float distanceMinDetection = 32.6f; // La distance à laquelle nous prévoyons de détecter le palet
 	    float tolerance = 1.0f; // Tolérance pour les lectures du capteur
 	    boolean distanceMinAtteinte = false;
-	    while (true) {
+	    //Initialization 
+	    float distanceActuelle = this.getDistance();
+	    float distancePrecedente = distanceActuelle;
+	   // Veifiier si le robot est trop proche de l'objet ( <detectionMin)
+	    if (distanceActuelle <= distanceMinDetection - tolerance) {
+	        deplacement.stop();
+	        System.out.println("Already too close to the object without detecting the pallet.");
+	        return false; // Not a pallet
+	    }
+	  //Verifier si la distance Minimale est atteinte + tolerance
+	   if (distanceActuelle <= distanceMinDetection + tolerance) {
+	        distanceMinAtteinte = true;
+	        System.out.println("Minimal detection distance already reached.");
+	    }
+	   // commencer d'avancer uniquement une fois distMinAtteinte
+	   if (!distanceMinAtteinte) {
+	        deplacement.modifVitLin(25); // Set linear speed to 25
+	        deplacement.avancerSync(distanceActuelle);
+	    }
+		
+	    while (deplacement.isMoving()) {
 	        distanceActuelle = this.getDistance();
 	        System.out.println("Distance actuelle : " + distanceActuelle + " cm");
 	        // Vérifier si nous avons atteint la distance minimale de détection
@@ -59,6 +77,7 @@ public class CapteurUltrason {
 	                return false; // Pas un palet
 	            }
 	        }
+		    //Mettre a jour la distance
 	        distancePrecedente = distanceActuelle;
 	        if (!deplacement.getPilot().isMoving()) {
 	            // Le robot a cessé de bouger
@@ -76,9 +95,9 @@ public class CapteurUltrason {
 	    return false;
     }
 
-     public boolean detectObjet() {
+     public boolean detectObjet(float detectionMin) {
         float distanceDobjet = this.getDistance();
-        return distanceDobjet < 50;
+        return distanceDobjet < detectionMin;
     }
 
     public void close() {
