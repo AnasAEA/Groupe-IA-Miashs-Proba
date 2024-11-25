@@ -1,3 +1,4 @@
+
 package agent;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public class Agent {
 
     // Method to detect objects by rotating 360 degrees
     public ArrayList<float[]> detecterLesObjets() {
-        deplacement.tournerAsync(360); // Démarrer une rotation de 360 degrés
+        deplacement.tournerSync(360); // Démarrer une rotation de 360 degrés
         MovePilot pilot = deplacement.getPilot();
         this.liste.clear();
 
@@ -109,7 +110,7 @@ public class Agent {
     	deplacement.avancer(10);
     	pince.ouvrirPince();Delay.msDelay(100);
     	deplacement.avancer(-10);
-    	deplacement.tournerAsync(180);Delay.msDelay(100);
+    	deplacement.tournerSync(180);Delay.msDelay(100);
     	pince.fermerPince();
     }
 	
@@ -206,13 +207,13 @@ public class Agent {
 	
 	public void esquive() {
 	    float distance = capteurUltrason.getDistance();
-	    deplacement.tournerAsync(90); Delay.msDelay(500); 
+	    deplacement.tourner(90); Delay.msDelay(500); 
 	    deplacement.avancer(25);Delay.msDelay(500);
-	    deplacement.tournerAsync(-90);
+	    deplacement.tourner(-90);
 	    deplacement.avancer(distance + 10);Delay.msDelay(500);                 
-	    deplacement.tournerAsync(-90);Delay.msDelay(500);
+	    deplacement.tourner(-90);Delay.msDelay(500);
 	    deplacement.avancer(25); Delay.msDelay(500);
-	    deplacement.tournerAsync(90);
+	    deplacement.tourner(90);
 	    System.out.println("Esquive terminée.");    
 	}
 
