@@ -46,7 +46,7 @@ public class Deplacement {
   		 pilot.travel(distance); 
 	}
 
-	public void tournerAsync(double angleToTurn) { //Rotation synchrone de l’angle en paramètre
+	public void tournerSync(double angleToTurn) { //Rotation synchrone de l’angle en paramètre
 		this.modifVitRot(50);
 		if (angleToTurn > 0) {
               	       angleToTurn += 13; // If turning counter-clockwise
