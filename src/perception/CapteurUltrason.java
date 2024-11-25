@@ -77,7 +77,7 @@ public class CapteurUltrason {
     }
 
      public boolean detectObjet() {
-        float distanceDobjet = capteurUltrason.getDistance();
+        float distanceDobjet = this.getDistance();
         return distanceDobjet < 50;
     }
 
