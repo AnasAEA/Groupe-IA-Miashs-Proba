@@ -35,16 +35,9 @@ public class Agent {
     }
 
 
-    public void corrigeDirection(float directionPrecedente) {
-	float currentDirection = this.getDirection();
-        if (currentDirection != directionPrecedente ) {
-            System.out.println("Correction de direction : " + currentDirection);
-            pilot.rotate(-currentDirection); // Ajuste l'orientation
-        }
-    }
 
     /**
-     * Détecte tout objet a une distance inférieure é 50 cm.
+     * Détecte tout objet a une distance inférieure à 80 cm.
      * 
      * @return true si un objet est détecté, false sinon.
      */
@@ -60,10 +53,10 @@ public class Agent {
             float directionActuelle = deplacement.getDirection(); // Obtenir l'orientation actuelle
 
             // Collecter les données si la distance est inférieure à un certain seuil
-            if (distance < 60.0f && distance >= 32.0f) {
+            if (distance < 80.0f && distance >= 32.0f) {
                 float[] objet = { distance, directionActuelle };
                 this.liste.add(objet);
-                System.out.println("Objet détecté é une distance de : " + distance + " cm, direction : "
+                System.out.println("Objet détecté à une distance de : " + distance + " cm, direction : "
                         + directionActuelle + " degrés.");
             }
 
@@ -101,10 +94,11 @@ public class Agent {
 	 
     public void attraperPalet() {
     	pince.ouvrirPince();
+	deplacement.modifVitLin(30);
     	deplacement.getPilot().forward();
 	while(deplacement.getPilot().isMoving()) {
     	     if(capteurTouche.isPressed()){
-		deplacement.stop();
+		deplacement.stop();Delay.msDelay(100);
 		pince.fermerPince();
 		return;
     	     }
@@ -113,9 +107,9 @@ public class Agent {
     
     public void lacherPalet() {
     	deplacement.avancer(10);
-    	pince.ouvrirPince();
+    	pince.ouvrirPince();Delay.msDelay(100);
     	deplacement.avancer(-10);
-    	deplacement.tournerAsync(180);
+    	deplacement.tournerAsync(180);Delay.msDelay(100);
     	pince.fermerPince();
     }
 	
@@ -136,28 +130,22 @@ public class Agent {
 	
      public void secondEttroisiemePalet(String directionTourn) {
     	deplacement.avancer(50);
-    	if(directionTourn.equalsIgnoreCase("Gauche"))
+    	if(directionTourn.equalsIgnoreCase("Gauche")) 
     		deplacement.tourner(90);
     	else
     		deplacement.tourner(-90);
     	
-     	int i=0;
-     	while (i <3 && !(capteurUltrason.detecterPalet()) ){
-     		deplacement.avancerSync(30);
-     		while(deplacement.getPilot().isMoving()) {
-     			Surveiller(); 
-         		Delay.msDelay(100);
+     	pince.ouvrirPince();
+     	deplacement.avancerSync(50);
+     	while(deplacement.getPilot().isMoving()) {
+     		if (capteurTouche.isPressed()) {
+     			deplacement.stop();
+     			return true;
      		}
+     		//Surveiller(); 
      		Delay.msDelay(100);
-     		i++;
      	}
-     	if(i!=3) {	
-     		this.attraperPalet();
-     		this.marquerPalet(); 
-     		System.out.print( "le palet est déposé");
-     	}
-     		//TODO : Cas ou aucun Palet sur la ligne Bleu
-     		deplacement.stop();
+     	return false;
         }
     
     /**
@@ -180,7 +168,7 @@ public class Agent {
         float currentDirection = deplacement.getDirection();
         float angleToTurn = directionCampAdverse - currentDirection;
 
-	deplacement.tournerAsync(angleToTurn);
+	deplacement.tourner(angleToTurn, true);
         // Déplacer le robot vers la ligne blanche (camp adverse)
         versCouleur("White");
 	
@@ -199,7 +187,7 @@ public class Agent {
 	    	
 	       
 	        // Obtenir la couleur courante détectée
-	        String couleurCourante = couleur.getColorName(); // Assurez-vous que capteurCouleur a la méthode getColorName()
+	        String couleurCourante = couleur.getColorName();
 
 	        // Comparer avec la couleur cible
 	        if (couleurCourante.equalsIgnoreCase(couleurCible)) {
@@ -214,7 +202,7 @@ public class Agent {
 	        // Attente pour éviter un traitement trop rapide
 	        Delay.msDelay(100);
 	    }
-}
+	}
 	
 	public void esquive() {
 	    float distance = capteurUltrason.getDistance();
@@ -243,23 +231,52 @@ public class Agent {
             float angleToTurn = directionToObject - currentDirection;
 
             // Rotate to face the object
-            deplacement.tourner(angleToTurn);
+            deplacement.tourner(angleToTurn, true);
 
             // Verifier si c'est un palet
-            boolean isPalet = capteurUltrason.detecterPalet();
-            return isPalet;
+            return capteurUltrason.detecterPalet();
+            
         }
         return false;
     }
     
     public void ligneCentrale() { 
-	deplacement.avancer(100);
+	deplacement.avancerSync(100);
+	while(deplacement.isMoving()) {
+		Surveiller();
+	   }
     }
 		
     public void run() {
         // Initialiser la direction du camp adverse
         directionCampAdverse = deplacement.getDirection();
-    }
+
+	//Application de la strategie
+
+	    //exemple 
+	premierPalet();
+        if (secondEttroisiemePalet("D")) {
+        	attraperPalet();
+        	marquerPalet();
+        	if (secondEttroisiemePalet("Gauche")) {
+            	attraperPalet();
+            	marquerPalet();
+        	}
+        }else {
+        	// Calcul de l'angle de rotation
+            float currentDirection = deplacement.getDirection();
+            float angleToTurn = directionCampAdverse - currentDirection;
+
+            // Rotate to face the opposite direction of camp adverse
+            deplacement.tourner(-angleToTurn,true);
+        }
+        ligneCentrale();
+       	if (ChercherPalet()){
+        	attraperPalet();
+        	marquerPalet();
+	}
+	    
+    	}
 	
     public static void main(String[] args) {
         Agent agent = new Agent();
