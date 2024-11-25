@@ -1,1 +1,53 @@
+package perception;
+
+import lejos.hardware.port.Port;
+
+public class CapteurUltrasonTest extends CapteurUltrason {
+  
+  	
+	public CapteurUltrasonTest (Port sensorPort) {   //initialisation de l'attribut sensor port qui permet l'accÃ©s au moteur
+		super(sensorPort);
+	}
+	
+	public void getDistanceTest(float x) {
+		boolean a =  this.getDistance() == x;
+		System.out.println(""+a);
+	}
+	
+	
+	
+	public void detectObjectTest() {
+		int i = 0;
+		while (i < 7) {
+		super.deplacement.avancerAsync(10);
+		System.out.println(super.detectObjet());
+		i++;
+		}
+		super.deplacement.stop();
+	}
+	
+	public void detectObjectTestbis() {
+		int i = 0;
+		while (i < 12) {
+		super.deplacement.tournerAsync(30);
+		System.out.println(super.detectObjet());
+		i++;
+		}
+		super.deplacement.stop();
+	}
+	
+	public void detecterPaletTest(){
+		int i = 0;
+		while (i< 12 && super.detecterPalet() == false ) {
+			super.deplacement.tournerAsync(30);;
+		}
+		
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}
 
