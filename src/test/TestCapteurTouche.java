@@ -1,42 +1,51 @@
 package tests;
 
 import lejos.hardware.port.SensorPort;
-import lejos.hardware.sensor.EV3TouchSensor;
 import lejos.hardware.Button;
 import perception.CapteurTouche;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 public class TestCapteurTouche {
 
-    public static void main(String[] args) {
-        System.out.println("Test du CapteurTouche");
-        System.out.println("Appuyez sur le capteur pour tester ou sur ESC pour quitter.");
+    private CapteurTouche capteur;
 
-        // Création d'une instance de CapteurTouche en utilisant le port S1
-        CapteurTouche capteur = new CapteurTouche(SensorPort.S1);
+    // Initialisation du capteur avant chaque test
+    @BeforeEach
+    public void setUp() {
+        capteur = new CapteurTouche(SensorPort.S1);
+    }
 
+  
+
+    // Test de la méthode isPressed() avec gestion d'exception
+    @Test
+    public void testIsPressed() {
         try {
-            while (true) {
-                // Vérifie si le capteur est pressé
-                if (capteur.isPressed()) {
-                    System.out.println("Capteur pressé !");
-                } else {
-                    System.out.println("Capteur relâché.");
-                }
-
-                // Sortie si le bouton ESC est pressé
-                if (Button.ESCAPE.isDown()) {
-                    System.out.println("Fin du test.");
-                    break;
-                }
-
-                // Ajout d'un délai pour éviter une surcharge de la console
-                Thread.sleep(500);
+            boolean isPressed = capteur.isPressed();
+            System.out.println("Le capteur est pressé : " + isPressed);
+            if (isPressed) {
+                System.out.println("Le capteur est actuellement pressé.");
+            } else {
+                System.out.println("Le capteur est actuellement relâché.");
             }
-        } catch (InterruptedException e) {
-            System.err.println("Erreur d'interruption : " + e.getMessage());
-        } finally {
-            // Libération des ressources
-            capteur.close();
+        } catch (Exception e) {
+            fail("Erreur lors de l'appel de isPressed : " + e.getMessage());
         }
     }
+
+    // Test de la méthode close() avec gestion d'exception
+    @Test
+    public void testClose() {
+        try {
+            capteur.close();
+            System.out.println("Capteur fermé avec succès.");
+        } catch (Exception e) {
+            fail("Erreur lors de la fermeture du capteur : " + e.getMessage());
+        }
+    }
+
+
 }
