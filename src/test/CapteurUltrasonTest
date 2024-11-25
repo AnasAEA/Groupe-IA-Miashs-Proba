@@ -1,12 +1,17 @@
-package perception;
+package test;
 
-import lejos.hardware.port.Port;
+import perception.CapteurUltrason;
+import lejos.hardware.port.SensorPort;
+
+
+//import action.Deplacement;
+
 
 public class CapteurUltrasonTest extends CapteurUltrason {
   
   	
-	public CapteurUltrasonTest (Port sensorPort) {   //initialisation de l'attribut sensor port qui permet l'accÃ©s au moteur
-		super(sensorPort);
+	public CapteurUltrasonTest () {   //initialisation de l'attribut sensor port qui permet l'accÃ©s au moteur
+		super(SensorPort.S1);
 	}
 	
 	public void getDistanceTest(float x) {
@@ -45,9 +50,11 @@ public class CapteurUltrasonTest extends CapteurUltrason {
 	}
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	CapteurUltrasonTest C = new  CapteurUltrasonTest();
+	C.detectObjectTest();
+	C.detecterPaletTest();
+	C.getDistanceTest(25);
 
 	}
 
 }
-
