@@ -34,3 +34,26 @@ public class TestPince {
         System.out.println("Test terminé.");
     }
 }
+
+
+/////////////////////////
+import lejos.hardware.motor.Motor;
+import lejos.hardware.motor.NXTRegulatedMotor;
+import lejos.utility.Delay;
+
+public class TestPince {
+
+    public static void main(String[] args) {
+        // Création d'une instance de la classe Pince
+        Pince pince = new Pince(); 
+
+        // Test 1: Fermer la pince
+        System.out.println("Fermeture de la pince...");
+        pince.fermerPince(); // Ferme la pince
+        System.out.println("Pince fermée.");
+
+        // Test 2: Ouvrir la pince
+        System.out.println("Ouverture de la pince...");
+        pince.ouvrirPince(); // Ouvre la pince
+        System.out.println("Pince ouverte.");
+
