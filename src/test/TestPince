@@ -1,40 +1,40 @@
-import lejos.hardware.motor.NXTRegulatedMotor;
 import lejos.hardware.motor.Motor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestPince {
 
     private Pince pince;
 
-    // Cette méthode est appelée avant chaque test pour initialiser la pince
-
+    // Initialisation de la pince avant chaque test
+   
     public void setUp() {
-        // Initialisation de l'objet Pince, avec un moteur réel
-        pince = new Pince(); // La pince utilise le moteur réel (Motor.D)
+        // Création de la pince avec le moteur réel
+        pince = new Pince(); // Utilisation de Motor.D (votre moteur réel)
     }
 
-    // Test de la méthode fermerPince
-   
+    // Test pour fermer la pince
     public void testFermerPince() {
+        // Appel de la méthode fermerPince
         pince.fermerPince();
 
-        // On peut vérifier si la pince est bien fermée
-        // Vous pouvez ajouter une méthode pour obtenir l'état de la pince si nécessaire
+        // Ici, vous ne pouvez pas vérifier directement l'état sans un capteur, mais vous pouvez
+        // afficher un message pour observer si la méthode est exécutée correctement
         System.out.println("Pince fermée");
-        // Exemple d'assertion si vous avez une méthode pour vérifier l'état de la pince
-        // assertFalse(pince.isOpen());  // A définir dans la classe Pince
     }
 
-    // Test de la méthode ouvrirPince
+    // Test pour ouvrir la pince
+
     public void testOuvrirPince() {
+        // Appel de la méthode ouvrirPince
         pince.ouvrirPince();
 
-        // On peut vérifier si la pince est bien ouverte
+        // Comme pour le test précédent, vous ne pouvez pas vérifier l'état sans un capteur, 
+        // mais vous pouvez afficher un message
         System.out.println("Pince ouverte");
-        // Exemple d'assertion si vous avez une méthode pour vérifier l'état de la pince
-        // assertTrue(pince.isOpen());  // A définir dans la classe Pince
     }
 }
+
 
