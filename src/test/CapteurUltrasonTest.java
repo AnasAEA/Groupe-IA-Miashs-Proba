@@ -13,6 +13,20 @@ public class CapteurUltrasonTest extends CapteurUltrason {
 	public CapteurUltrasonTest () {   //initialisation de l'attribut sensor port qui permet l'accÃ©s au moteur
 		super(SensorPort.S1);
 	}
+
+public void TestFonction() {
+		MovePilot pilot  = super.deplacement.getPilot();  
+	    while (pilot.isMoving()) {
+	     if (super.detectObjet()) {
+		System.out.println("Objet Detecte");
+		 if (super.detecterPalet()) {
+				System.out.println("Palet Detecte");
+			     }
+	     }
+	   }
+		
+	
+	}
 	
 	public void getDistanceTest(float x) {
 		boolean a =  this.getDistance() == x;
