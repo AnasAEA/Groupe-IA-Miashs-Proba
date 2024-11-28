@@ -247,6 +247,14 @@ public class Agent {
 		Surveiller();
 	   }
     }
+
+    public void autresPalets() {
+    	ligneCentrale();
+    	while(!ChercherPalet()) {
+    	}
+    	attraperPalet();
+    	marquerPalet();
+    }
 		
     public void run() {
         // Initialiser la direction du camp adverse
