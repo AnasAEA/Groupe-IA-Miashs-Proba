@@ -1,0 +1,38 @@
+package tests;
+
+import action.Pince;
+import lejos.hardware.motor.NXTRegulatedMotor;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+public class TestPince {
+
+    private Pince pince;
+    private NXTRegulatedMotor motorMock;
+
+    public void setUp() {
+        // Création d'un mock pour le moteur (moteur simulé)
+        motorMock = mock(NXTRegulatedMotor.class);
+        // Initialisation de l'objet Pince avec ce moteur simulé
+        pince = new Pince();
+        pince.setMotor(motorMock);  // On donne le moteur simulé à la pince
+    }
+
+    public void testFermerPince() {
+        // On teste la méthode fermerPince
+        pince.fermerPince();
+        
+        // On vérifie si la méthode rotate a bien été appelée avec la valeur -850
+        verify(motorMock, times(1)).rotate(-850);
+    }
+
+    public void testOuvrirPince() {
+        // On teste la méthode ouvrirPince
+        pince.ouvrirPince();
+        
+        // On vérifie si la méthode rotateTo a bien été appelée avec la valeur 850
+        verify(motorMock, times(1)).rotateTo(850);
+    }
+}
