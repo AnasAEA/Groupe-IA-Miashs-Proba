@@ -1,43 +1,29 @@
 
+
 import lejos.hardware.motor.Motor;
 import lejos.hardware.motor.NXTRegulatedMotor;
+import lejos.utility.Delay;
 
 public class TestPince extends Pince {
 
     public TestPince() {
-        super(); // Appel du constructeur parent avec Motor.D comme moteur
+        super(); 
     }
 
     public void testerFermeturePince() {
         System.out.println("Test: Fermeture de la pince...");
         fermerPince();
         System.out.println("Pince fermée.");
-        attendre(1000);
+        Delay.msDelay(100); 
     }
 
     public void testerOuverturePince() {
         System.out.println("Test: Ouverture de la pince...");
         ouvrirPince();
         System.out.println("Pince ouverte.");
-        attendre(1000);
+        Delay.msDelay(100); 
     }
 
-    private void attendre(int millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+ }
 
-    public void lancerTests() {
-        testerFermeturePince();
-        testerOuverturePince();
-        System.out.println("Test terminé.");
-    }
-
-    public static void main(String[] args) {
-        TestPince test = new TestPince();
-        test.lancerTests();  // Lancer tous les tests
-    }
-}
+  
