@@ -1,53 +1,43 @@
+
 import lejos.hardware.motor.Motor;
+import lejos.hardware.motor.NXTRegulatedMotor;
 
 public class TestPince extends Pince {
+
     public TestPince() {
-        super();
-        
+        super(); // Appel du constructeur parent avec Motor.D comme moteur
+    }
+
+    public void testerFermeturePince() {
         System.out.println("Test: Fermeture de la pince...");
         fermerPince();
         System.out.println("Pince fermée.");
+        attendre(1000);
+    }
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+    public void testerOuverturePince() {
         System.out.println("Test: Ouverture de la pince...");
         ouvrirPince();
         System.out.println("Pince ouverte.");
+        attendre(1000);
+    }
 
+    private void attendre(int millis) {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(millis);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
 
+    public void lancerTests() {
+        testerFermeturePince();
+        testerOuverturePince();
         System.out.println("Test terminé.");
     }
-}
-
-
-
-/////////////////////////
-import lejos.hardware.motor.Motor;
-import lejos.hardware.motor.NXTRegulatedMotor;
-import lejos.utility.Delay;
-
-public class TestPince {
 
     public static void main(String[] args) {
-        // Création d'une instance de la classe Pince
-        Pince pince = new Pince(); 
-
-        // Test 1: Fermer la pince
-        System.out.println("Fermeture de la pince...");
-        pince.fermerPince(); // Ferme la pince
-        System.out.println("Pince fermée.");
-
-        // Test 2: Ouvrir la pince
-        System.out.println("Ouverture de la pince...");
-        pince.ouvrirPince(); // Ouvre la pince
-        System.out.println("Pince ouverte.");
-
+        TestPince test = new TestPince();
+        test.lancerTests();  // Lancer tous les tests
+    }
+}
