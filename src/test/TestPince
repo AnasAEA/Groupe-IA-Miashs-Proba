@@ -1,39 +1,33 @@
 import lejos.hardware.motor.Motor;
 
-public class TestPince {
-
-    public static void main(String[] args) {
-        // Création d'une instance de la classe Pince
-        Pince pince = new Pince(); 
-
-        // Test de la méthode fermerPince
+public class TestPince extends Pince {
+    public TestPince() {
+        super();
+        
         System.out.println("Test: Fermeture de la pince...");
-        pince.fermerPince(); // Ferme la pince
+        fermerPince();
         System.out.println("Pince fermée.");
 
-        // Attente pour voir l'effet
         try {
-            Thread.sleep(1000); // Attente de 1 seconde
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        // Test de la méthode ouvrirPince
         System.out.println("Test: Ouverture de la pince...");
-        pince.ouvrirPince(); // Ouvre la pince
+        ouvrirPince();
         System.out.println("Pince ouverte.");
 
-        // Attente pour voir l'effet
         try {
-            Thread.sleep(1000); // Attente de 1 seconde
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        // Terminer le test
         System.out.println("Test terminé.");
     }
 }
+
 
 
 /////////////////////////
