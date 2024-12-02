@@ -278,7 +278,13 @@ public class Agent {
 	}
 	    
     	}
-	
+    public void autresPalets() {
+    	ligneCentrale();
+    	while(!ChercherPalet()) {
+    	}
+    	attraperPalet();
+    	marquerPalet();
+    }
     public static void main(String[] args) {
         Agent agent = new Agent();
         agent.run();
