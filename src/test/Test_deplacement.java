@@ -1,6 +1,6 @@
 package test;
 
-import Action.Deplacement;
+import action.Deplacement;
 public class Test_deplacement extends Deplacement{
 		
 	public Test_deplacement() {
