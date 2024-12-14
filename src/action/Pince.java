@@ -25,8 +25,8 @@ public class Pince {
 	            Delay.msDelay(100); 
 	        }
 	        etat=false;
-	        }
-	        pince.stop();
+	}
+	pince.stop();
     }
 
     // Ouvre les pinces pour relâcher le palet
