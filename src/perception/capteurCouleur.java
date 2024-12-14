@@ -21,28 +21,22 @@ public class capteurCouleur {
 
 
          //Methodes de detction des couleurs 
-    public boolean isBlue() {
-        return isColorMatch(BLUE_CALIBRATION, BLUE_TOLERANCE);
-    }
-
-    public boolean isBlack() {
-        return isColorMatch(BLACK_CALIBRATION, BLACK_TOLERANCE);
+    public boolean isColor(String colorName) {
+        return getColorName().equalsIgnoreCase(colorName);
     }
 
     public boolean isWhite() {
-        return isColorMatch(WHITE_CALIBRATION, WHITE_TOLERANCE);
+        return getColorID() == Color.WHITE;
     }
 
-    private boolean isColorMatch(float[] calibrationData, float[] tolerances) {
-        float[] sample = getNormalizedSample();
-
-        for (int i = 0; i < sample.length; i++) {
-            if (Math.abs(sample[i] - calibrationData[i]) > tolerances[i]) {
-                return false;
-            }
-        }
-        return true;
+    public boolean isBlack() {
+        return getColorID() == Color.BLACK;
     }
+
+    public boolean isBlue() {
+        return getColorID() == Color.BLUE;
+    }
+
 
     private float[] getNormalizedSample() {
         SampleProvider rgbMode = colorSensor.getRGBMode();
