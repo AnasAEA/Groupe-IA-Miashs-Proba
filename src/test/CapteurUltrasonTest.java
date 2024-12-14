@@ -84,28 +84,6 @@ public class CapteurUltrasonTest extends CapteurUltrason {
     }
 
     /**
-     * Teste la méthode detectObjet() en tournant le robot et en vérifiant la détection.
-     * 
-     * @param angle Angle de rotation en degrés.
-     * @return boolean - true si un objet est détecté pendant la rotation, false sinon.
-     */
-    public boolean detectObjectTestBis(float angle) {
-        System.out.println("TestDetectObjectBis: Tourner de " + angle + " degrés et détecter les objets.");
-        super.deplacement.tournerAsync(angle);
-        int i = 0;
-        boolean objetDetecte = false;
-        while (i < 12 && super.deplacement.getPilot().isMoving()) {
-            objetDetecte = super.detectObjet();
-            System.out.println("Détection objet à " + (i+1)*30 + "°: " + objetDetecte);
-            Delay.msDelay(500);
-            i++;
-        }
-        super.deplacement.stop();
-        System.out.println("TestDetectObjectBis: " + (objetDetecte ? "Objet détecté." : "Aucun objet détecté."));
-        return objetDetecte;
-    }
-
-    /**
      * Teste la méthode detecterPalet() en tournant le robot jusqu'à la détection d'un palet.
      * 
      * @return boolean - true si un palet est détecté, false sinon.
