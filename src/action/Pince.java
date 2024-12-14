@@ -29,7 +29,7 @@ public class Pince {
 	        pince.stop();
     }
 
-    // Relâche le palet
+    // Ouvre les pinces pour relâcher le palet
     public void ouvrirPince() {
         if(!etat) {
         pince.rotateTo(850);
