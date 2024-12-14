@@ -32,11 +32,11 @@ public class Pince {
     // Ouvre les pinces pour relâcher le palet
     public void ouvrirPince() {
         if(!etat) {
-        pince.rotateTo(850);
-        while (pince.isMoving()) {
-            Delay.msDelay(100); // Wait for 100 milliseconds
-        }
-        etat=true;
+        	pince.rotateTo(850);
+        	while (pince.isMoving()) {
+            		Delay.msDelay(100); // Wait for 100 milliseconds
+        	}
+        	etat=true;
         }
         pince.stop();
     }
