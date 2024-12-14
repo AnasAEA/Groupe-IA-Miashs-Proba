@@ -3,6 +3,7 @@ import lejos.hardware.Button;
 import lejos.hardware.port.Port;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.EV3ColorSensor;
+import lejos.robotics.Color;
 import lejos.robotics.SampleProvider;
 import lejos.utility.Delay;
 
@@ -11,20 +12,11 @@ public class capteurCouleur {
 
     private EV3ColorSensor colorSensor;
 
-     // Pour eviter les erreurs de detections , on normalise les valeurs 
- // Normalized calibration data for colors
-    private static final float[] BLUE_CALIBRATION = {0.1035f, 0.4824f, 0.4137f};
-    private static final float[] BLACK_CALIBRATION = {0.0f, 1.0f, 0.0f};
-    private static final float[] WHITE_CALIBRATION = {0.45f, 0.3735f, 0.1765f};
-
- // on definit les tolerances pour chaque couleur
-    private static final float[] BLUE_TOLERANCE = {0.1f, 0.15f, 0.1f};
-    private static final float[] BLACK_TOLERANCE = {0.05f, 0.1f, 0.05f};
-    private static final float[] WHITE_TOLERANCE = {0.1f, 0.1f, 0.1f};
+     
         // Constructeur de ColorSensor
     public capteurCouleur(Port port) {
         colorSensor = new EV3ColorSensor(port);
-        colorSensor.setFloodlight(Color.WHITE);
+        colorSensor.setFloodlight(true);
     }
 
 
