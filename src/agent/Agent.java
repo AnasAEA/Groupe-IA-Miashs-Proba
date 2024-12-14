@@ -54,7 +54,7 @@ public class Agent {
             float directionActuelle = deplacement.getDirection(); // Obtenir l'orientation actuelle
 
             // Collecter les données si la distance est inférieure à un certain seuil
-            if (distance < 80.0f && distance >= 32.0f) {
+            if (distance < 80.0f && distance >= 34.0f) {
                 float[] objet = { distance, directionActuelle };
                 this.liste.add(objet);
                 System.out.println("Objet détecté à une distance de : " + distance + " cm, direction : "
@@ -93,24 +93,40 @@ public class Agent {
 
 
 	 
-    public void attraperPalet() {
+    public void attraperPalet(boolean premier) {
     	pince.ouvrirPince();
 	deplacement.modifVitLin(30);
-    	deplacement.getPilot().forward();
-	while(deplacement.getPilot().isMoving()) {
+	float last_distance  = capteurUltrason.getDistance();
+    	if(!premier)
+    		deplacement.avancerSync(40);
+    	else
+    		deplacement.getPilot().forward();
+
+    	while(deplacement.getPilot().isMoving()) {
     	     if(capteurTouche.isPressed()){
-		deplacement.stop();Delay.msDelay(100);
-		pince.fermerPince();
-		return;
+    	    	 deplacement.stop();Delay.msDelay(100);
+    	    	 pince.fermerPince();
+    	    	 return true;
+    	     }
+    	     if(capteurUltrason.getDistance() == last_distance+40) {
+    	    	 deplacement.stop();Delay.msDelay(100);
+    	    	 return false ;
     	     }
     	}
+    	return false;
+    }
+
+    public void retourStrategie() {
+    	deplacement.avancer(-40);
+    	pince.fermerPince();
+    	autrePalets();
     }
     
     public void lacherPalet() {
     	deplacement.avancer(10);
     	pince.ouvrirPince();Delay.msDelay(100);
     	deplacement.avancer(-10);
-    	deplacement.tournerSync(180);Delay.msDelay(100);
+    	deplacement.tourner(180);Delay.msDelay(500);
     	pince.fermerPince();
     }
 	
@@ -123,31 +139,20 @@ public class Agent {
     }
     
      public void premierPalet() {
-    	this.attraperPalet();
+    	this.attraperPalet(true);
     	this.devierDeLaLigne();
     	this.marquerPalet(); 
     	System.out.print( "le palet est déposé");    
     }
 	
      public void secondEttroisiemePalet(String directionTourn) {
-    	deplacement.avancer(50);
+    	deplacement.avancer(55);
     	if(directionTourn.equalsIgnoreCase("Gauche")) 
     		deplacement.tourner(90);
     	else
     		deplacement.tourner(-90);
-    	
-     	pince.ouvrirPince();
-     	deplacement.avancerSync(50);
-     	while(deplacement.getPilot().isMoving()) {
-     		if (capteurTouche.isPressed()) {
-     			deplacement.stop();
-     			return true;
-     		}
-     		//Surveiller(); 
-     		Delay.msDelay(100);
-     	}
-     	return false;
-        }
+    	return attraperPalet(true);
+     }
     
     /**
      * Surveille la présence d'obstacles et effectue une esquive si un obstacle est
@@ -156,7 +161,7 @@ public class Agent {
      * @return true si un obstacle était détecté et esquivé, false sinon.
      */
     public boolean Surveiller() {
-        if (capteurUltrason.detectObjet(25)) {
+        if (capteurUltrason.detectObjet(10)) {
             System.out.println("Obstacle détecté lors de la surveillance. Initiation de l'évitement...");
             esquive();
             return true;
@@ -165,57 +170,72 @@ public class Agent {
     }
 
     private void marquerPalet() {
-        // Ajuster l'orientation du robot vers le camp adverse
+         // Ajuster l'orientation du robot vers le camp adverse
         float currentDirection = deplacement.getDirection();
         float angleToTurn = directionCampAdverse - currentDirection;
 
-	deplacement.tourner(angleToTurn, true);
+        deplacement.tourner(angleToTurn, true);
+        
+        float currentDirection2 = deplacement.getDirection();
+        float angleToTurn2 = directionCampAdverse - currentDirection2;
+
+        deplacement.tourner(angleToTurn2, true);
+        
         // Déplacer le robot vers la ligne blanche (camp adverse)
         versCouleur("White");
+        System.out.println("Couleur Blanche detecte");
 	
         // Lâcher le palet
         lacherPalet();
-	compteur = compteur +1;     
+        compteur = compteur +1;    
     }
 
-	public void versCouleur(String couleurCible) {
-	    System.out.println("Recherche de la couleur : " + couleurCible);
-	    deplacement.modifVitLin(30);
+    public void versCouleur(String couleurCible) {
+        System.out.println("Recherche de la couleur : " + couleurCible);
+        deplacement.modifVitLin(30);
+        //float directionIni = deplacement.getDirection();
+        deplacement.getPilot().forward();
 
-	    deplacement.getPilot().forward();
-	    
-	    while (deplacement.getPilot().isMoving()) { 
-	    	
-	       
-	        // Obtenir la couleur courante détectée
-	        String couleurCourante = couleur.getColorName();
+        while (deplacement.getPilot().isMoving()) { 
+            // V�rifier si la couleur cible est d�tect�e
+            boolean couleurDetectee = false;
 
-	        // Comparer avec la couleur cible
-	        if (couleurCourante.equalsIgnoreCase(couleurCible)) {
-	            deplacement.stop(); // Arrêter le mouvement si la couleur cible est détectée
-	            System.out.println("Couleur cible détectée : " + couleurCourante);
-	            break; // Quitter la boucle
-	        }
+            if (couleurCible.equalsIgnoreCase("White")) {
+                couleurDetectee = couleur.isWhite();
+            } else if (couleurCible.equalsIgnoreCase("Black")) {
+                couleurDetectee = couleur.isBlack();
+            } else if (couleurCible.equalsIgnoreCase("Blue")) {
+                couleurDetectee = couleur.isBlue();
+            } else {
+                System.out.println("Couleur cible non reconnue : " + couleurCible);
+                deplacement.stop();
+                return;
+            }
+            if (couleurDetectee) {
+                deplacement.stop(); // Arr�ter le mouvement si la couleur cible est d�tect�e
+                System.out.println("Couleur cible d�tect�e : " + couleurCible);
+                break; // Quitter la boucle
+            }
+            
+            // V�rifier s'il y a un obstacle
+            Surveiller();
 
-	        // Vérifier s'il y a un obstacle
-	    	Surveiller() ;
-		    
-	        // Attente pour éviter un traitement trop rapide
-	        Delay.msDelay(100);
-	    }
-	}
+            // Attente pour �viter un traitement trop rapide
+            Delay.msDelay(100);
+        }
+    }
 	
-	public void esquive() {
-	    float distance = capteurUltrason.getDistance();
-	    deplacement.tourner(90); Delay.msDelay(500); 
-	    deplacement.avancer(25);Delay.msDelay(500);
-	    deplacement.tourner(-90);
-	    deplacement.avancer(distance + 10);Delay.msDelay(500);                 
-	    deplacement.tourner(-90);Delay.msDelay(500);
-	    deplacement.avancer(25); Delay.msDelay(500);
-	    deplacement.tourner(90);
-	    System.out.println("Esquive terminée.");    
-	}
+    public void esquive() {
+	float distance = capteurUltrason.getDistance();
+	deplacement.tourner(90); Delay.msDelay(500); 
+	deplacement.avancer(25);Delay.msDelay(500);
+	deplacement.tourner(-90);
+	deplacement.avancer(distance + 10);Delay.msDelay(500);                 
+	deplacement.tourner(-90);Delay.msDelay(500);
+	deplacement.avancer(25); Delay.msDelay(500);
+	deplacement.tourner(90);
+	System.out.println("Esquive terminée.");         
+    }
 
 	
     public boolean ChercherPalet() {
@@ -242,28 +262,38 @@ public class Agent {
     }
     
     public void ligneCentrale() { 
-	deplacement.avancerSync(100);
+	deplacement.avancerSync(120);
 	while(deplacement.isMoving()) {
 		Surveiller();
-	   }
+	}
+    }
+
+    public void autrePalets() {
+    	ligneCentrale();
+    	while (!ChercherPalet()){
+    		deplacement.tourner(180);
+    		deplacement.avancer(30);
+    	}
+       	if(attraperPalet(false)) {
+       		marquerPalet();
+       		return;
+       	}
+       	retourStrategie();
     }
 		
     public void run() {
         // Initialiser la direction du camp adverse
-        directionCampAdverse = deplacement.getDirection();
+    	directionCampAdverse = (deplacement.getDirection()+360)%360;
+    	//Application de la strategie
 
-	//Application de la strategie
-
-	    //exemple 
-	premierPalet();
-        if (secondEttroisiemePalet("D")) {
-        	attraperPalet();
-        	marquerPalet();
-        	if (secondEttroisiemePalet("Gauche")) {
-            	attraperPalet();
-            	marquerPalet();
-        	}
-        }else {
+	//exemple 
+        //premierPalet();
+      if (secondEttroisiemePalet("D")) {
+        marquerPalet();
+       	if (secondEttroisiemePalet("D")) {
+           	marquerPalet();        	
+        }
+       	else {
         	// Calcul de l'angle de rotation
             float currentDirection = deplacement.getDirection();
             float angleToTurn = directionCampAdverse - currentDirection;
@@ -271,20 +301,21 @@ public class Agent {
             // Rotate to face the opposite direction of camp adverse
             deplacement.tourner(-angleToTurn,true);
         }
-        ligneCentrale();
-       	if (ChercherPalet()){
-        	attraperPalet();
-        	marquerPalet();
-	}
-	    
-    	}
-    public void autresPalets() {
-    	ligneCentrale();
-    	while(!ChercherPalet()) {
-    	}
-    	attraperPalet();
-    	marquerPalet();
+      }else {
+        	// Calcul de l'angle de rotation
+            float currentDirection = deplacement.getDirection();
+            float angleToTurn = directionCampAdverse - currentDirection;
+
+            // Rotate to face the opposite direction of camp adverse
+            deplacement.tourner(-angleToTurn,true);
+      }
+      autrePalets();
+      while(compteur <= 6)
+	    autrePalets();
+        
     }
+	
+    
     public static void main(String[] args) {
         Agent agent = new Agent();
         agent.run();
