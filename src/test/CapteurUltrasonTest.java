@@ -8,9 +8,6 @@ import lejos.utility.Delay;
 /**
  * Classe de test pour la classe CapteurUltrason.
  * Elle hérite de CapteurUltrason pour accéder directement aux méthodes de détection.
- * Note : Hériter de la classe à tester n'est pas une pratique standard en tests unitaires.
- * Il est préférable d'utiliser des instances dans les tests, mais pour les besoins de cet exemple,
- * nous suivons l'approche de l'utilisateur.
  */
 public class CapteurUltrasonTest extends CapteurUltrason {
     
