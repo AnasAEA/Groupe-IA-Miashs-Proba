@@ -76,42 +76,5 @@ public class CapteurCouleur {
     public void close() {
         colorSensor.close();
     }
-
-    public void collectColorData() {
-        SampleProvider rgbMode = colorSensor.getRGBMode();
-        float[] sample  = new float[rgbMode.sampleSize()];
-        	
-        float[] blueCalibration = new float[3];
-        float[] blackCalibration = new float[3];
-        float[] whiteCalibration = new float[3];
-        	
-        //blue 
-        System.out.println("Poser sur la ligne bleu  et click ENTRER:  ");
-        Button.ENTER.waitForPressAndRelease();
-        rgbMode.fetchSample(sample, 0);
-        System.arraycopy(sample, 0, blueCalibration, 0, sample.length);
-        System.out.println("Blue data collected");
-        	
-        //white 
-        System.out.println("Poser sur la ligne blanche  et click ENTRER:  ");
-        Button.ENTER.waitForPressAndRelease();
-        rgbMode.fetchSample(sample, 0);
-        System.arraycopy(sample, 0, whiteCalibration, 0, sample.length);
-        System.out.println("White data collected");
-        	
-        //black
-        System.out.println("Poser sur la ligne Noire  et click ENTRER:  ");
-        Button.ENTER.waitForPressAndRelease();
-        rgbMode.fetchSample(sample, 0);
-        System.arraycopy(sample, 0, blackCalibration, 0, sample.length);
-        System.out.println("Black data collected");
-        	
-        	
-        //print the data 	
-        System.out.println("BLUE: R= "+blueCalibration[0]+" G= "+ blueCalibration[1]+ " B= "+ blueCalibration[2]);
-        System.out.println("BLACK: R= "+blackCalibration[0]+" G= "+ blackCalibration[1]+ " B= "+ blackCalibration[2]);
-        System.out.println("WHITE: R= "+whiteCalibration[0]+" G= "+ whiteCalibration[1]+ " B= "+ whiteCalibration[2]);
-        	
-    }   
     
 }
