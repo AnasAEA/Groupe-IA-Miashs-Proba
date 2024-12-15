@@ -145,7 +145,7 @@ public class Agent {
     	System.out.print( "le palet est déposé");    
     }
 	
-     public void secondEttroisiemePalet(String directionTourn) {
+     public boolean secondEttroisiemePalet(String directionTourn) {
     	deplacement.avancer(55);
     	if(directionTourn.equalsIgnoreCase("Gauche")) 
     		deplacement.tourner(90);
