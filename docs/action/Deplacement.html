@@ -98,73 +98,73 @@
 <br>
 <pre>public class <span class="strong">Deplacement</span>
 extends java.lang.Object</pre>
-<div class="block">Classe Deplacement permettant de gérer les déplacements d'un robot 
- à l'aide d'un châssis différentiel. Cette classe propose des méthodes 
- pour avancer, tourner et ajuster les vitesses linéaires et angulaires.
+<div class="block">Classe Deplacement permettant de gÃ©rer les dÃ©placements d'un robot 
+ Ã  l'aide d'un chÃ¢ssis diffÃ©rentiel. Cette classe propose des mÃ©thodes 
+ pour avancer, tourner et ajuster les vitesses linÃ©aires et angulaires.
  
  <p><strong>Objectifs du Module</strong></p>
  <ul>
-   <li>Gérer les mouvements du robot de manière précise et efficace.</li>
-   <li>Permettre des rotations ajustées pour compenser les erreurs d'odométrie.</li>
-   <li>Faciliter la modification des vitesses linéaires et angulaires en fonction des besoins du projet.</li>
-   <li>Assurer une navigation autonome et réactive face aux obstacles et aux changements de direction.</li>
+   <li>GÃ©rer les mouvements du robot de maniÃ¨re prÃ©cise et efficace.</li>
+   <li>Permettre des rotations ajustÃ©es pour compenser les erreurs d'odomÃ©trie.</li>
+   <li>Faciliter la modification des vitesses linÃ©aires et angulaires en fonction des besoins du projet.</li>
+   <li>Assurer une navigation autonome et rÃ©active face aux obstacles et aux changements de direction.</li>
  </ul>
  
- <p><strong>Relations d’utilisation avec d’Autres Modules</strong></p>
+ <p><strong>Relations dâ€™utilisation avec dâ€™Autres Modules</strong></p>
  <ul>
-   <li>La classe <code>Deplacement</code> est utilisée par <code>Agent</code>, <code>CapteurUltrason</code>, <code>CapteurCouleur</code>, <code>Pince</code>, et <code>Test_deplacement</code> pour contrôler les mouvements du robot.</li>
+   <li>La classe <code>Deplacement</code> est utilisÃ©e par <code>Agent</code>, <code>CapteurUltrason</code>, <code>CapteurCouleur</code>, <code>Pince</code>, et <code>Test_deplacement</code> pour contrÃ´ler les mouvements du robot.</li>
  </ul>
  
- <p><strong>Modules Utilisés par ce Module</strong></p>
+ <p><strong>Modules UtilisÃ©s par ce Module</strong></p>
  <ul>
-   <li><code>lejos.hardware.motor.Motor</code> : Fournit l'accès aux moteurs du robot.</li>
-   <li><code>lejos.robotics.chassis.Wheel</code> : Représente les roues du robot.</li>
-   <li><code>lejos.robotics.chassis.WheeledChassis</code> : Permet de définir le châssis du robot avec ses roues.</li>
-   <li><code>lejos.robotics.localization.OdometryPoseProvider</code> : Fournit les informations de position basées sur l'odométrie.</li>
-   <li><code>lejos.robotics.navigation.MovePilot</code> : Contrôle les mouvements du robot en utilisant le châssis défini.</li>
+   <li><code>lejos.hardware.motor.Motor</code> : Fournit l'accÃ¨s aux moteurs du robot.</li>
+   <li><code>lejos.robotics.chassis.Wheel</code> : ReprÃ©sente les roues du robot.</li>
+   <li><code>lejos.robotics.chassis.WheeledChassis</code> : Permet de dÃ©finir le chÃ¢ssis du robot avec ses roues.</li>
+   <li><code>lejos.robotics.localization.OdometryPoseProvider</code> : Fournit les informations de position basÃ©es sur l'odomÃ©trie.</li>
+   <li><code>lejos.robotics.navigation.MovePilot</code> : ContrÃ´le les mouvements du robot en utilisant le chÃ¢ssis dÃ©fini.</li>
  </ul>
  
  <p><strong>Modules Utilisant ce Module</strong></p>
  <ul>
-   <li><code>Agent</code> : Utilise <code>Deplacement</code> pour gérer les déplacements du robot.</li>
-   <li><code>CapteurUltrason</code> : Utilise <code>Deplacement</code> pour ajuster les mouvements en fonction des détections de distance.</li>
-   <li><code>CapteurCouleur</code> : Utilise <code>Deplacement</code> pour ajuster les trajectoires en fonction des couleurs détectées.</li>
+   <li><code>Agent</code> : Utilise <code>Deplacement</code> pour gÃ©rer les dÃ©placements du robot.</li>
+   <li><code>CapteurUltrason</code> : Utilise <code>Deplacement</code> pour ajuster les mouvements en fonction des dÃ©tections de distance.</li>
+   <li><code>CapteurCouleur</code> : Utilise <code>Deplacement</code> pour ajuster les trajectoires en fonction des couleurs dÃ©tectÃ©es.</li>
    <li><code>Pince</code> : Peut utiliser <code>Deplacement</code> pour coordonner les mouvements lors de la manipulation des objets.</li>
-   <li><code>Test_deplacement</code> : Utilise <code>Deplacement</code> pour tester les différentes méthodes de déplacement.</li>
+   <li><code>Test_deplacement</code> : Utilise <code>Deplacement</code> pour tester les diffÃ©rentes mÃ©thodes de dÃ©placement.</li>
  </ul>
  
- <p><strong>Définitions de Types</strong></p>
+ <p><strong>DÃ©finitions de Types</strong></p>
  <ul>
-   <li><strong>DIAMETRE</strong> : Diamètre des roues du robot en centimètres.</li>
-   <li><strong>pilot</strong> : Instance de <code>MovePilot</code> utilisée pour contrôler les mouvements du robot.</li>
-   <li><strong>poseProvider</strong> : Instance de <code>PoseProvider</code> utilisée pour obtenir la position et l'orientation du robot.</li>
+   <li><strong>DIAMETRE</strong> : DiamÃ¨tre des roues du robot en centimÃ¨tres.</li>
+   <li><strong>pilot</strong> : Instance de <code>MovePilot</code> utilisÃ©e pour contrÃ´ler les mouvements du robot.</li>
+   <li><strong>poseProvider</strong> : Instance de <code>PoseProvider</code> utilisÃ©e pour obtenir la position et l'orientation du robot.</li>
  </ul>
  
- <p><strong>Procédures Externes</strong></p>
+ <p><strong>ProcÃ©dures Externes</strong></p>
  <ul>
-   <li><code>getDirection()</code> : Retourne la direction actuelle du robot en degrés.</li>
-   <li><code>getPilot()</code> : Retourne l'instance de <code>MovePilot</code> utilisée pour le contrôle des mouvements.</li>
-   <li><code>avancerSync(double distance)</code> : Fait avancer le robot sur une distance spécifiée en mode synchrone.</li>
-   <li><code>avancer(double distance)</code> : Fait avancer le robot sur une distance spécifiée en mode asynchrone.</li>
-   <li><code>tournerSync(double angleToTurn)</code> : Fait tourner le robot d'un angle spécifié en mode synchrone avec ajustement des erreurs de rotation.</li>
-   <li><code>tourner(double angleToTurn)</code> : Fait tourner le robot d'un angle spécifié en mode asynchrone avec ajustement des erreurs de rotation.</li>
-   <li><code>tourner(double angleToTurn, boolean heading)</code> : Méthode spécialisée pour les rotations nécessitant une interaction avec le <code>PoseProvider</code>.</li>
-   <li><code>modifVitRot(double s)</code> : Modifie la vitesse angulaire du robot (rotation) en degrés par seconde.</li>
-   <li><code>modifVitLin(double s)</code> : Modifie la vitesse linéaire du robot en centimètres par seconde.</li>
-   <li><code>isMoving()</code> : Vérifie si le robot est actuellement en mouvement.</li>
-   <li><code>stop()</code> : Arrête immédiatement tous les mouvements du robot.</li>
+   <li><code>getDirection()</code> : Retourne la direction actuelle du robot en degrÃ©s.</li>
+   <li><code>getPilot()</code> : Retourne l'instance de <code>MovePilot</code> utilisÃ©e pour le contrÃ´le des mouvements.</li>
+   <li><code>avancerSync(double distance)</code> : Fait avancer le robot sur une distance spÃ©cifiÃ©e en mode synchrone.</li>
+   <li><code>avancer(double distance)</code> : Fait avancer le robot sur une distance spÃ©cifiÃ©e en mode asynchrone.</li>
+   <li><code>tournerSync(double angleToTurn)</code> : Fait tourner le robot d'un angle spÃ©cifiÃ© en mode synchrone avec ajustement des erreurs de rotation.</li>
+   <li><code>tourner(double angleToTurn)</code> : Fait tourner le robot d'un angle spÃ©cifiÃ© en mode asynchrone avec ajustement des erreurs de rotation.</li>
+   <li><code>tourner(double angleToTurn, boolean heading)</code> : MÃ©thode spÃ©cialisÃ©e pour les rotations nÃ©cessitant une interaction avec le <code>PoseProvider</code>.</li>
+   <li><code>modifVitRot(double s)</code> : Modifie la vitesse angulaire du robot (rotation) en degrÃ©s par seconde.</li>
+   <li><code>modifVitLin(double s)</code> : Modifie la vitesse linÃ©aire du robot en centimÃ¨tres par seconde.</li>
+   <li><code>isMoving()</code> : VÃ©rifie si le robot est actuellement en mouvement.</li>
+   <li><code>stop()</code> : ArrÃªte immÃ©diatement tous les mouvements du robot.</li>
  </ul>
  
  <p><strong>Variables Externes</strong></p>
  <ul>
-   <li><code>DIAMETRE</code> : Constante définissant le diamètre des roues du robot.</li>
-   <li><code>pilot</code> : Instance de <code>MovePilot</code> utilisée pour contrôler les mouvements du robot.</li>
-   <li><code>poseProvider</code> : Instance de <code>PoseProvider</code> utilisée pour obtenir la position et l'orientation du robot.</li>
+   <li><code>DIAMETRE</code> : Constante dÃ©finissant le diamÃ¨tre des roues du robot.</li>
+   <li><code>pilot</code> : Instance de <code>MovePilot</code> utilisÃ©e pour contrÃ´ler les mouvements du robot.</li>
+   <li><code>poseProvider</code> : Instance de <code>PoseProvider</code> utilisÃ©e pour obtenir la position et l'orientation du robot.</li>
  </ul></div>
 <dl><dt><span class="strong">Version:</span></dt>
   <dd>1.0</dd>
 <dt><span class="strong">Author:</span></dt>
-  <dd>AIT EL HADJ Anas, AMACHAT Yousra, HALILY Youssef, NGUIRANE Marième, TAMSOURI Mohammed</dd></dl>
+  <dd>AIT EL HADJ Anas, AMACHAT Yousra, HALILY Youssef, NGUIRANE MariÃ¨me, TAMSOURI Mohammed</dd></dl>
 </li>
 </ul>
 </div>
@@ -205,69 +205,69 @@ extends java.lang.Object</pre>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../action/Deplacement.html#avancer(double)">avancer</a></strong>(double&nbsp;distance)</code>
-<div class="block">Fait avancer le robot sur une distance spécifiée (mode asynchrone).</div>
+<div class="block">Fait avancer le robot sur une distance spÃ©cifiÃ©e (mode asynchrone).</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../action/Deplacement.html#avancerSync(double)">avancerSync</a></strong>(double&nbsp;distance)</code>
-<div class="block">Fait avancer le robot sur une distance spécifiée (mode synchrone).</div>
+<div class="block">Fait avancer le robot sur une distance spÃ©cifiÃ©e (mode synchrone).</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>float</code></td>
 <td class="colLast"><code><strong><a href="../action/Deplacement.html#getDirection()">getDirection</a></strong>()</code>
-<div class="block">Retourne la direction actuelle du robot en degrés.</div>
+<div class="block">Retourne la direction actuelle du robot en degrÃ©s.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>MovePilot</code></td>
 <td class="colLast"><code><strong><a href="../action/Deplacement.html#getPilot()">getPilot</a></strong>()</code>
-<div class="block">Retourne l'instance de MovePilot utilisée pour le contrôle des mouvements.</div>
+<div class="block">Retourne l'instance de MovePilot utilisÃ©e pour le contrÃ´le des mouvements.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../action/Deplacement.html#isMoving()">isMoving</a></strong>()</code>
-<div class="block">Vérifie si le robot est actuellement en mouvement.</div>
+<div class="block">VÃ©rifie si le robot est actuellement en mouvement.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../action/Deplacement.html#modifVitLin(double)">modifVitLin</a></strong>(double&nbsp;s)</code>
-<div class="block">Modifie la vitesse linéaire du robot en centimètres par seconde.</div>
+<div class="block">Modifie la vitesse linÃ©aire du robot en centimÃ¨tres par seconde.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../action/Deplacement.html#modifVitRot(double)">modifVitRot</a></strong>(double&nbsp;s)</code>
-<div class="block">Modifie la vitesse angulaire du robot (rotation) en degrés par seconde.</div>
+<div class="block">Modifie la vitesse angulaire du robot (rotation) en degrÃ©s par seconde.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../action/Deplacement.html#stop()">stop</a></strong>()</code>
-<div class="block">Arrête immédiatement tous les mouvements du robot.</div>
+<div class="block">ArrÃªte immÃ©diatement tous les mouvements du robot.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../action/Deplacement.html#tourner(double)">tourner</a></strong>(double&nbsp;angleToTurn)</code>
-<div class="block">Fait tourner le robot d'un angle spécifié (mode asynchrone).</div>
+<div class="block">Fait tourner le robot d'un angle spÃ©cifiÃ© (mode asynchrone).</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../action/Deplacement.html#tourner(double, boolean)">tourner</a></strong>(double&nbsp;angleToTurn,
        boolean&nbsp;heading)</code>
-<div class="block">Méthode spécialisée pour les rotations nécessitant une interaction avec le poseProvider
+<div class="block">MÃ©thode spÃ©cialisÃ©e pour les rotations nÃ©cessitant une interaction avec le poseProvider
  (par exemple en cas d'erreurs de direction).</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../action/Deplacement.html#tournerSync(double)">tournerSync</a></strong>(double&nbsp;angleToTurn)</code>
-<div class="block">Fait tourner le robot d'un angle spécifié (mode synchrone).</div>
+<div class="block">Fait tourner le robot d'un angle spÃ©cifiÃ© (mode synchrone).</div>
 </td>
 </tr>
 </table>
@@ -300,7 +300,7 @@ extends java.lang.Object</pre>
 <h4>Deplacement</h4>
 <pre>public&nbsp;Deplacement()</pre>
 <div class="block">Constructeur de la classe Deplacement. 
- Initialise les roues, le châssis, le pilote et le fournisseur de position.</div>
+ Initialise les roues, le chÃ¢ssis, le pilote et le fournisseur de position.</div>
 </li>
 </ul>
 </li>
@@ -318,8 +318,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getDirection</h4>
 <pre>public&nbsp;float&nbsp;getDirection()</pre>
-<div class="block">Retourne la direction actuelle du robot en degrés.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd>La direction (orientation) du robot en degrés.</dd></dl>
+<div class="block">Retourne la direction actuelle du robot en degrÃ©s.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd>La direction (orientation) du robot en degrÃ©s.</dd></dl>
 </li>
 </ul>
 <a name="getPilot()">
@@ -329,7 +329,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getPilot</h4>
 <pre>public&nbsp;MovePilot&nbsp;getPilot()</pre>
-<div class="block">Retourne l'instance de MovePilot utilisée pour le contrôle des mouvements.</div>
+<div class="block">Retourne l'instance de MovePilot utilisÃ©e pour le contrÃ´le des mouvements.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>L'instance MovePilot.</dd></dl>
 </li>
 </ul>
@@ -340,8 +340,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>avancerSync</h4>
 <pre>public&nbsp;void&nbsp;avancerSync(double&nbsp;distance)</pre>
-<div class="block">Fait avancer le robot sur une distance spécifiée (mode synchrone).</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>distance</code> - Distance en centimètres que le robot doit parcourir.</dd></dl>
+<div class="block">Fait avancer le robot sur une distance spÃ©cifiÃ©e (mode synchrone).</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>distance</code> - Distance en centimÃ¨tres que le robot doit parcourir.</dd></dl>
 </li>
 </ul>
 <a name="avancer(double)">
@@ -351,8 +351,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>avancer</h4>
 <pre>public&nbsp;void&nbsp;avancer(double&nbsp;distance)</pre>
-<div class="block">Fait avancer le robot sur une distance spécifiée (mode asynchrone).</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>distance</code> - Distance en centimètres que le robot doit parcourir.</dd></dl>
+<div class="block">Fait avancer le robot sur une distance spÃ©cifiÃ©e (mode asynchrone).</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>distance</code> - Distance en centimÃ¨tres que le robot doit parcourir.</dd></dl>
 </li>
 </ul>
 <a name="tournerSync(double)">
@@ -362,9 +362,9 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>tournerSync</h4>
 <pre>public&nbsp;void&nbsp;tournerSync(double&nbsp;angleToTurn)</pre>
-<div class="block">Fait tourner le robot d'un angle spécifié (mode synchrone).
+<div class="block">Fait tourner le robot d'un angle spÃ©cifiÃ© (mode synchrone).
  Ajuste automatiquement les valeurs d'angle pour compenser les erreurs de rotation.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>angleToTurn</code> - Angle en degrés à parcourir.</dd></dl>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>angleToTurn</code> - Angle en degrÃ©s Ã  parcourir.</dd></dl>
 </li>
 </ul>
 <a name="tourner(double)">
@@ -374,9 +374,9 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>tourner</h4>
 <pre>public&nbsp;void&nbsp;tourner(double&nbsp;angleToTurn)</pre>
-<div class="block">Fait tourner le robot d'un angle spécifié (mode asynchrone).
+<div class="block">Fait tourner le robot d'un angle spÃ©cifiÃ© (mode asynchrone).
  Ajuste automatiquement les valeurs d'angle pour compenser les erreurs de rotation.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>angleToTurn</code> - Angle en degrés à parcourir.</dd></dl>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>angleToTurn</code> - Angle en degrÃ©s Ã  parcourir.</dd></dl>
 </li>
 </ul>
 <a name="tourner(double, boolean)">
@@ -387,9 +387,9 @@ extends java.lang.Object</pre>
 <h4>tourner</h4>
 <pre>public&nbsp;void&nbsp;tourner(double&nbsp;angleToTurn,
            boolean&nbsp;heading)</pre>
-<div class="block">Méthode spécialisée pour les rotations nécessitant une interaction avec le poseProvider
- (par exemple en cas d'erreurs de direction). Peut fonctionner en mode ajusté ou simple.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>angleToTurn</code> - Angle en degrés à parcourir.</dd><dd><code>heading</code> - Si true, ajuste l'angle pour compenser les erreurs d'odométrie.</dd></dl>
+<div class="block">MÃ©thode spÃ©cialisÃ©e pour les rotations nÃ©cessitant une interaction avec le poseProvider
+ (par exemple en cas d'erreurs de direction). Peut fonctionner en mode ajustÃ© ou simple.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>angleToTurn</code> - Angle en degrÃ©s Ã  parcourir.</dd><dd><code>heading</code> - Si true, ajuste l'angle pour compenser les erreurs d'odomÃ©trie.</dd></dl>
 </li>
 </ul>
 <a name="modifVitRot(double)">
@@ -399,7 +399,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>modifVitRot</h4>
 <pre>public&nbsp;void&nbsp;modifVitRot(double&nbsp;s)</pre>
-<div class="block">Modifie la vitesse angulaire du robot (rotation) en degrés par seconde.</div>
+<div class="block">Modifie la vitesse angulaire du robot (rotation) en degrÃ©s par seconde.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>s</code> - Nouvelle vitesse angulaire.</dd></dl>
 </li>
 </ul>
@@ -410,8 +410,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>modifVitLin</h4>
 <pre>public&nbsp;void&nbsp;modifVitLin(double&nbsp;s)</pre>
-<div class="block">Modifie la vitesse linéaire du robot en centimètres par seconde.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>s</code> - Nouvelle vitesse linéaire.</dd></dl>
+<div class="block">Modifie la vitesse linÃ©aire du robot en centimÃ¨tres par seconde.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>s</code> - Nouvelle vitesse linÃ©aire.</dd></dl>
 </li>
 </ul>
 <a name="isMoving()">
@@ -421,7 +421,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>isMoving</h4>
 <pre>public&nbsp;boolean&nbsp;isMoving()</pre>
-<div class="block">Vérifie si le robot est actuellement en mouvement.</div>
+<div class="block">VÃ©rifie si le robot est actuellement en mouvement.</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd><code>true</code> si le robot est en mouvement, <code>false</code> sinon.</dd></dl>
 </li>
 </ul>
@@ -432,7 +432,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>stop</h4>
 <pre>public&nbsp;void&nbsp;stop()</pre>
-<div class="block">Arrête immédiatement tous les mouvements du robot.</div>
+<div class="block">ArrÃªte immÃ©diatement tous les mouvements du robot.</div>
 </li>
 </ul>
 </li>
