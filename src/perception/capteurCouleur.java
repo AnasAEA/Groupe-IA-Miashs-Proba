@@ -112,29 +112,6 @@ public class CapteurCouleur {
         System.out.println("BLACK: R= "+blackCalibration[0]+" G= "+ blackCalibration[1]+ " B= "+ blackCalibration[2]);
         System.out.println("WHITE: R= "+whiteCalibration[0]+" G= "+ whiteCalibration[1]+ " B= "+ whiteCalibration[2]);
         	
-    }
-
-    public static void main(String[] args) {
-        // Initialiser le capteur de couleur sur le port S4    
-        capteurCouleur cc = new capteurCouleur(SensorPort.S4);
-
-        System.out.println("Test de d�tection des couleurs. Appuyez sur ENTR�E pour quitter.");
-
-        // Boucle jusqu'� ce que le bouton ENTR�E soit press�
-        while (!Button.ENTER.isDown()) {
-            // Obtenir le nom de la couleur d�tect�e
-            String colorName = cc.getColorName();
-            System.out.println("Couleur d�tect�e : " + colorName);
-
-            // Attendre un court instant avant la prochaine lecture
-            Delay.msDelay(500);
-        }
-
-           // Fermer le capteur de couleur
-           cc.close();
-           System.out.println("Programme termin�.");
-    }
-
-    
+    }   
     
 }
