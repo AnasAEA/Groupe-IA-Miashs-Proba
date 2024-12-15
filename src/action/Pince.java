@@ -45,10 +45,4 @@ public class Pince {
 		this.etat = pincesOuvertes;
     }
 
-    public static void main(String[] args) {
-    	Pince p = new Pince();
-    	p.setPincesOuvertes(true);
-   	//p.ouvrirPince();
-    	p.fermerPince();
-    }
 }
