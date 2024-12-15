@@ -10,7 +10,7 @@ import lejos.hardware.port.SensorPort;
 import lejos.robotics.navigation.MovePilot;
 import perception.CapteurTouche;
 import perception.CapteurUltrason;
-import perception.capteurCouleur;
+import perception.CapteurCouleur;
 import lejos.utility.Delay;
 
 public class Agent {
@@ -21,7 +21,7 @@ public class Agent {
     private ArrayList<float[]> liste = new ArrayList<>();
     private float directionCampAdverse; // Déclaration en tant qu'attribut de classe
     private Pince pince ;
-    private capteurCouleur couleur;
+    private CapteurCouleur couleur;
     private int compteur;	
 	
 
@@ -31,7 +31,7 @@ public class Agent {
         capteurTouche = new CapteurTouche(SensorPort.S2);
         deplacement = new Deplacement();
         pince = new Pince();
-        couleur = new capteurCouleur(SensorPort.S4);
+        couleur = new CapteurCouleur(SensorPort.S4);
         deplacement.modifVitLin(30);
     }
 
