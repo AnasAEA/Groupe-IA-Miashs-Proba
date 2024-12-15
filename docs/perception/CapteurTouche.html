@@ -98,57 +98,57 @@
 <br>
 <pre>public class <span class="strong">CapteurTouche</span>
 extends java.lang.Object</pre>
-<div class="block">Classe CapteurTouche permettant de gérer les interactions avec un capteur tactile 
- sur un robot LEGO EV3. Cette classe fournit des méthodes pour détecter si le capteur 
- est pressé et pour fermer correctement le capteur lorsqu'il n'est plus utilisé.
+<div class="block">Classe CapteurTouche permettant de gÃ©rer les interactions avec un capteur tactile 
+ sur un robot LEGO EV3. Cette classe fournit des mÃ©thodes pour dÃ©tecter si le capteur 
+ est pressÃ© et pour fermer correctement le capteur lorsqu'il n'est plus utilisÃ©.
  
  <strong>Objectifs du Module</strong>
  <ul>
-   <li>Détecter l'état tactile du robot de manière fiable.</li>
-   <li>Fournir une interface simple pour intégrer le capteur tactile dans d'autres modules.</li>
-   <li>Assurer une gestion appropriée des ressources du capteur pour éviter les fuites de mémoire.</li>
+   <li>DÃ©tecter l'Ã©tat tactile du robot de maniÃ¨re fiable.</li>
+   <li>Fournir une interface simple pour intÃ©grer le capteur tactile dans d'autres modules.</li>
+   <li>Assurer une gestion appropriÃ©e des ressources du capteur pour Ã©viter les fuites de mÃ©moire.</li>
  </ul>
  
- <strong>Relations d’utilisation avec d’Autres Modules</strong>
+ <strong>Relations dâ€™utilisation avec dâ€™Autres Modules</strong>
  <ul>
-   <li>La classe <code>CapteurTouche</code> est utilisée par <code>Agent</code>, <code>Pince</code>, et <code>Test_CapteurTouche</code> pour détecter les interactions tactiles.</li>
+   <li>La classe <code>CapteurTouche</code> est utilisÃ©e par <code>Agent</code>, <code>Pince</code>, et <code>Test_CapteurTouche</code> pour dÃ©tecter les interactions tactiles.</li>
  </ul>
  
- <strong>Modules Utilisés par ce Module</strong>
+ <strong>Modules UtilisÃ©s par ce Module</strong>
  <ul>
-   <li><code>lejos.hardware.port.Port</code> : Fournit l'accès au port matériel auquel le capteur tactile est connecté.</li>
-   <li><code>lejos.hardware.sensor.EV3TouchSensor</code> : Représente le capteur tactile EV3 utilisé pour détecter les pressions.</li>
-   <li><code>lejos.robotics.SampleProvider</code> : Fournit des échantillons de données à partir du capteur tactile.</li>
+   <li><code>lejos.hardware.port.Port</code> : Fournit l'accÃ¨s au port matÃ©riel auquel le capteur tactile est connectÃ©.</li>
+   <li><code>lejos.hardware.sensor.EV3TouchSensor</code> : ReprÃ©sente le capteur tactile EV3 utilisÃ© pour dÃ©tecter les pressions.</li>
+   <li><code>lejos.robotics.SampleProvider</code> : Fournit des Ã©chantillons de donnÃ©es Ã  partir du capteur tactile.</li>
  </ul>
  
  <strong>Modules Utilisant ce Module</strong>
  <ul>
-   <li><code>Agent</code> : Utilise <code>CapteurTouche</code> pour réagir aux pressions tactiles.</li>
-   <li><code>Pince</code> : Utilise <code>CapteurTouche</code> pour détecter les manipulations manuelles.</li>
-   <li><code>Test_CapteurTouche</code> : Utilise <code>CapteurTouche</code> pour valider les fonctionnalités du capteur tactile.</li>
+   <li><code>Agent</code> : Utilise <code>CapteurTouche</code> pour rÃ©agir aux pressions tactiles.</li>
+   <li><code>Pince</code> : Utilise <code>CapteurTouche</code> pour dÃ©tecter les manipulations manuelles.</li>
+   <li><code>Test_CapteurTouche</code> : Utilise <code>CapteurTouche</code> pour valider les fonctionnalitÃ©s du capteur tactile.</li>
  </ul>
  
- <strong>Définitions de Types</strong>
+ <strong>DÃ©finitions de Types</strong>
  <ul>
-   <li><strong>touchSensor</strong> : Instance de <code>EV3TouchSensor</code> utilisée pour interagir avec le capteur tactile.</li>
-   <li><strong>touchSampleProvider</strong> : Instance de <code>SampleProvider</code> utilisée pour obtenir des échantillons de données du capteur tactile.</li>
-   <li><strong>sample</strong> : Tableau de flottants stockant les données échantillonnées du capteur tactile.</li>
+   <li><strong>touchSensor</strong> : Instance de <code>EV3TouchSensor</code> utilisÃ©e pour interagir avec le capteur tactile.</li>
+   <li><strong>touchSampleProvider</strong> : Instance de <code>SampleProvider</code> utilisÃ©e pour obtenir des Ã©chantillons de donnÃ©es du capteur tactile.</li>
+   <li><strong>sample</strong> : Tableau de flottants stockant les donnÃ©es Ã©chantillonnÃ©es du capteur tactile.</li>
  </ul>
  
- <strong>Procédures Externes</strong>
+ <strong>ProcÃ©dures Externes</strong>
  <ul>
-   <li><code>isPressed()</code> : Retourne <code>true</code> si le capteur tactile est actuellement pressé, <code>false</code> sinon.</li>
-   <li><code>close()</code> : Ferme le capteur tactile pour libérer les ressources.</li>
+   <li><code>isPressed()</code> : Retourne <code>true</code> si le capteur tactile est actuellement pressÃ©, <code>false</code> sinon.</li>
+   <li><code>close()</code> : Ferme le capteur tactile pour libÃ©rer les ressources.</li>
  </ul>
  
  <strong>Variables Externes</strong>
  <ul>
-   <li><code>touchSensor</code> : Instance de <code>EV3TouchSensor</code> utilisée pour interagir avec le capteur tactile.</li>
-   <li><code>touchSampleProvider</code> : Instance de <code>SampleProvider</code> utilisée pour obtenir des échantillons de données du capteur tactile.</li>
-   <li><code>sample</code> : Tableau de flottants stockant les données échantillonnées du capteur tactile.</li>
+   <li><code>touchSensor</code> : Instance de <code>EV3TouchSensor</code> utilisÃ©e pour interagir avec le capteur tactile.</li>
+   <li><code>touchSampleProvider</code> : Instance de <code>SampleProvider</code> utilisÃ©e pour obtenir des Ã©chantillons de donnÃ©es du capteur tactile.</li>
+   <li><code>sample</code> : Tableau de flottants stockant les donnÃ©es Ã©chantillonnÃ©es du capteur tactile.</li>
  </ul></div>
 <dl><dt><span class="strong">Author:</span></dt>
-  <dd>AIT EL HADJ Anas, AMACHAT Yousra, HALILY Youssef, NGUIRANE Marième, TAMSOURI Mohammed</dd></dl>
+  <dd>AIT EL HADJ Anas, AMACHAT Yousra, HALILY Youssef, NGUIRANE MariÃ¨me, TAMSOURI Mohammed</dd></dl>
 </li>
 </ul>
 </div>
@@ -189,13 +189,13 @@ extends java.lang.Object</pre>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><strong><a href="../perception/CapteurTouche.html#close()">close</a></strong>()</code>
-<div class="block">Ferme le capteur tactile pour libérer les ressources.</div>
+<div class="block">Ferme le capteur tactile pour libÃ©rer les ressources.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><strong><a href="../perception/CapteurTouche.html#isPressed()">isPressed</a></strong>()</code>
-<div class="block">Vérifie si le capteur tactile est actuellement pressé.</div>
+<div class="block">VÃ©rifie si le capteur tactile est actuellement pressÃ©.</div>
 </td>
 </tr>
 </table>
@@ -228,8 +228,8 @@ extends java.lang.Object</pre>
 <h4>CapteurTouche</h4>
 <pre>public&nbsp;CapteurTouche(Port&nbsp;sensorPort)</pre>
 <div class="block">Constructeur de la classe CapteurTouche.
- Initialise le capteur tactile avec le port spécifié.</div>
-<dl><dt><span class="strong">Parameters:</span></dt><dd><code>sensorPort</code> - Le port matériel auquel le capteur tactile est connecté.</dd></dl>
+ Initialise le capteur tactile avec le port spÃ©cifiÃ©.</div>
+<dl><dt><span class="strong">Parameters:</span></dt><dd><code>sensorPort</code> - Le port matÃ©riel auquel le capteur tactile est connectÃ©.</dd></dl>
 </li>
 </ul>
 </li>
@@ -247,8 +247,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>isPressed</h4>
 <pre>public&nbsp;boolean&nbsp;isPressed()</pre>
-<div class="block">Vérifie si le capteur tactile est actuellement pressé.</div>
-<dl><dt><span class="strong">Returns:</span></dt><dd><code>true</code> si le capteur tactile est pressé, <code>false</code> sinon.</dd></dl>
+<div class="block">VÃ©rifie si le capteur tactile est actuellement pressÃ©.</div>
+<dl><dt><span class="strong">Returns:</span></dt><dd><code>true</code> si le capteur tactile est pressÃ©, <code>false</code> sinon.</dd></dl>
 </li>
 </ul>
 <a name="close()">
@@ -258,7 +258,7 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>close</h4>
 <pre>public&nbsp;void&nbsp;close()</pre>
-<div class="block">Ferme le capteur tactile pour libérer les ressources.</div>
+<div class="block">Ferme le capteur tactile pour libÃ©rer les ressources.</div>
 </li>
 </ul>
 </li>
