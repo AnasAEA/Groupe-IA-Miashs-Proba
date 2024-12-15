@@ -93,7 +93,7 @@ public class Agent {
 
 
 	 
-    public void attraperPalet(boolean premier) {
+    public boolean attraperPalet(boolean premier) {
     	pince.ouvrirPince();
 	deplacement.modifVitLin(30);
 	float last_distance  = capteurUltrason.getDistance();
