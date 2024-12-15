@@ -8,13 +8,13 @@ import lejos.robotics.SampleProvider;
 import lejos.utility.Delay;
 
 
-public class capteurCouleur {
+public class CapteurCouleur {
 
     private EV3ColorSensor colorSensor;
 
      
         // Constructeur de ColorSensor
-    public capteurCouleur(Port port) {
+    public CapteurCouleur(Port port) {
         colorSensor = new EV3ColorSensor(port);
         colorSensor.setFloodlight(true);
     }
