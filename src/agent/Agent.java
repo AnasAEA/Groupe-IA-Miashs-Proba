@@ -284,9 +284,7 @@ public class Agent {
     public void run() {
         // Initialiser la direction du camp adverse
     	directionCampAdverse = (deplacement.getDirection()+360)%360;
-    	//Application de la strategie
-
-	//exemple 
+    	//Application de la strategie 
       premierPalet();
       if (secondEttroisiemePalet("D")) {
         marquerPalet();
