@@ -287,7 +287,7 @@ public class Agent {
     	//Application de la strategie
 
 	//exemple 
-        //premierPalet();
+      premierPalet();
       if (secondEttroisiemePalet("D")) {
         marquerPalet();
        	if (secondEttroisiemePalet("D")) {
