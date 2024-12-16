@@ -307,7 +307,7 @@ public class Agent {
             // Rotate to face the opposite direction of camp adverse
             deplacement.tourner(-angleToTurn,true);
       }
-      autrePalets();
+      //autrePalets();
       while(compteur <= 6)
 	    autrePalets();
         
